@@ -1,0 +1,88 @@
+\documentclass[11pt,twoside]{report}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}     % Codificación de fuentes
+\usepackage[spanish]{babel}
+\usepackage{geometry}        % Controlar márgenes
+\usepackage{titlesec}        % Personalizar títulos de capítulos y secciones
+\usepackage{hyperref}        % Enlaces en el PDF
+\usepackage{graphicx}        % Insertar imágenes
+\usepackage{adjustbox}
+\usepackage{float}
+
+\titlespacing*{\chapter}{0pt}{0.5cm}{0.5cm} % Ajustar espaciado en cm
+
+% Configuración de márgenes
+\geometry{
+    a4paper,
+    left=3cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Documento
+\begin{document}
+
+% Inclusión del archivo requerimientos.tex
+\include{introduccion}
+
+\include{propuesta}
+
+\include{vap}
+
+\include{plantilla}
+
+\include{vulnwp}
+
+\include{pre-requerimientos}
+
+\include{requerimientos}
+
+
+% Anexos
+\appendix
+
+\include{PatronesSoftware/patrones}
+
+\include{Antripatrones/sqlInjection}
+
+\include{Antripatrones/css}
+
+\include{Antripatrones/bac}
+
+\include{Antripatrones/csrf}
+
+\include{Antripatrones/ssrf}
+
+\include{Antripatrones/pathtraversal}
+
+\include{Antripatrones/rfilfi}
+
+\include{Antripatrones/rce}
+
+\include{Antripatrones/cvsInjection}
+
+\include{Antripatrones/dataexposure}
+
+\include{Antripatrones/IDOR}
+
+\include{Antripatrones/privilegeescalation}
+
+\include{Antripatrones/RaceCondition}
+
+\include{Antripatrones/afu}
+
+\include{Antripatrones/afd}
+
+\include{Antripatrones/afdeletion}
+
+\include{Antripatrones/dos}
+
+\include{Antripatrones/typejuggling}
+
+\include{Antripatrones/phpobjectinjection}
+
+\end{document}
+

@@ -1,0 +1,55 @@
+\chapter{Data Exposure}
+\section{Antipatrón}
+\subsection{Nombre}
+Data exposure
+\subsection{Tambien conocido como}
+Exposure of Sensitive Information to an Unauthorized Actor
+Information Disclosure
+Information Leak
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Arquitectura
+Implementación
+\subsection{Mapeo con CWE}
+CWE-200
+\subsection{Ejemplos de CVE}
+CVE-2024-10285
+CVE-2024-2107
+CVE-2013-2203 
+\subsection{Ejemplo de antipatrón}
+https://cwe.mitre.org/data/definitions/200.html
+\subsection{Fuerzas desbalanceadas}
+\begin{itemize}
+    \item Un sistema de login con usuario y clave que avisa al usuario de que colocó una contraseña incorrecta, está revelando información sobre la existencia de ese usuario, lo que puede facilitar ataques de fuerza bruta.
+    \item El código gestiona recursos que contienen intencionalmente información sensible, pero estos recursos se hacen accesibles de forma no intencionada para actores no autorizados. 
+    \item La manipulación de datos sensibles de usuario sin el cifrado correcto durante su transmisión o almacenamiento, podrían ser interceptados o accesibles a personas no autorizadas. 
+    \item El sistema permite un acceso uniforme a todos los usuarios sin una estructura de roles por detrás lo que puede dar acceso a datos sensibles a usuarios no autorizados.
+\end{itemize}
+\subsection{Attack pattern}
+CAPEC-116
+\subsection{Problema}
+El producto expone información sensible a un actor que no está explícitamente autorizado para acceder a esa información. Las exposiciones de información pueden ocurrir de diversas maneras:
+    \begin{itemize}
+        \item El código inserta explícitamente información sensible en recursos o mensajes que son intencionalmente accesibles para actores no autorizados, pero que no deberían contener dicha información; es decir, la información debería haber sido "limpiada" o "saneada".
+        \item Una debilidad o error diferente (podria ser un plugin o tema vulnerable) inserta indirectamente la información sensible en los recursos, como un error en un script web que revela la ruta completa del sistema donde se encuentra el programa.
+        \item El código gestiona recursos que contienen intencionalmente información sensible, pero estos recursos se hacen accesibles por error a actores no autorizados. En este caso, la exposición de la información es resultante; es decir, una debilidad diferente permitió el acceso a la información desde el inicio.
+    \end{itemize}
+\subsection{Consecuencias}
+Confidencialidad:
+\begin{itemize}
+    \item Exposición de datos personales o privados, afectando la privacidad de los usuarios.
+    \item Pérdida de secretos comerciales o propiedad intelectual, lo cual puede impactar la competitividad de una organización.
+    \item Compromiso de seguridad del sistema o la red, ya que información de configuración interna puede ser usada en ataques.
+    \item Exposición de registros y metadatos, que pueden ofrecer información indirecta valiosa para atacantes.
+\end{itemize}
+\section{Patrón}
+\subsection{Solución en el SDLC}
+Arquitectura: Compartimentar el sistema para crear áreas "seguras" donde se puedan definir límites de confianza de manera clara. No permitir que los datos sensibles salgan del límite de confianza y tener siempre precaución al interactuar con un compartimento fuera del área segura.
+Asegurarse de que la compartimentación adecuada esté integrada en el diseño del sistema, y que dicha compartimentación permita y refuerce la funcionalidad de separación de privilegios. Los arquitectos y diseñadores deben basarse en el principio de mínimo privilegio para decidir el momento adecuado para usar y eliminar esos privilegios.
+\subsection{Ejemplo de solución}
+\subsection{Related patterns}
+
+\begin{itemize}
+    \item RBAC
+    \item Proxy Pattern: Este patrón actúa como intermediario, controlando el acceso al objeto real y permitiendo implementar autenticación, autorización y registros de actividades (logging) en el acceso a recursos sensibles. Al controlar el acceso, el Proxy Pattern ayuda a asegurar que solo los usuarios autorizados puedan interactuar con el objeto o recurso, reduciendo el riesgo de exposición de información sensible.
+    \item Facade Pattern: Este patrón oculta la complejidad interna del sistema y proporciona una interfaz simplificada, lo que disminuye el riesgo de exponer detalles internos o información confidencial. Además, al centralizar el acceso, se pueden agregar verificaciones de seguridad y validación en la fachada, evitando que usuarios no autorizados accedan al subsistema o expongan datos sensibles.
+\end{itemize}

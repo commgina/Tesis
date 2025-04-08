@@ -1,0 +1,39 @@
+
+\chapter{Antipatrón de Vulnerabilidades}    
+
+Antes de saltar directamente al tema Wordpress, es de suma importancia dejar bien claro los conceptos de patrón, antipatrón y vulnerabilidad ya que son el pilar para entender el porque de la necesidad de relacionarlos en una plantilla y posteriormente, en una base de datos de VAP.
+
+\section{Definiciones}
+
+\textbf{Patrón:}
+
+\textbf{Antipatrón:} Es una mala práctica de software.  describe una solución común a un problema frecuente, pero que genera consecuencias negativas. Deja al descubierto como algunas prácticas comunes en el desarrollo de software parecen apropiadas pero en realidad introducen más vulnerabilidades. 
+
+\textbf{Vulnerabilidad:} una debilidad común y recurrente que ocurre debido a errores en el desarrollo, poco control de calidad en las etapas del SDLC o poca preocupación por cuestiones de seguridad. Esto sumado a la práctica de compartir información y conocimiento  que tiene la comunidad de ciberseguridad, les permite a los hackers aprovecharse de estas vulnerabilidades.
+
+\vspace{0.3cm}
+Un anti-patrón es algo que generalmente se considera negativo en el contexto del desarrollo de software. Se refiere a una \textit{práctica, diseño o solución a un problema que, aunque pueda parecer válido o común, en realidad lleva a resultados negativos}, como código difícil de mantener, bajo rendimiento o vulnerabilidades de seguridad.
+Entonces, en términos generales, un anti-patrón es algo que se debe evitar en el desarrollo de software. Reconocer y comprender los anti-patrones puede ayudar a los desarrolladores a mejorar la calidad, la eficiencia y la seguridad del software que producen, ya que les permite evitar soluciones que pueden llevar a problemas conocidos o introducir nuevas vulnerabilidades.
+
+\section{Perspectiva de los antipatrones para desarrolladores de Software}
+
+Las vulnerabilidades de software son debilidades en la arquitectura, el diseño o el código de un sistema que pueden causar violaciones de la política de seguridad del sistema. Su existencia es la causa principal de los ataques a los sistemas de software. Aunque la ciberseguridad es un atributo de calidad fundamental, a menudo se considera como algo secundario en el desarrollo de software
+Al tener otras preocupaciones, los desarrolladores piensan que la responsabilidad de la seguridad es de alguien más como los pentesters o hackers éticos. Los APV proporcionan una solución a esto en tres pasos:
+
+\begin{enumerate}
+    \item Identificar prácticas de ingeniería de software deficientes que resultaron en una vulnerabilidad.
+    \item Mostrarle al desarrollador como mitigar la vulnerabilidad
+    \item Motivar a adoptar mejores prácticas de seguridad
+\end{enumerate}
+Un Anti-Patrón de Vulnerabilidad identifica un problema (es decir, una práctica deficiente que causa negativamente una falla de seguridad) y una solución (es decir, un conjunto de acciones de refactorización que se pueden llevar a cabo para mitigar o detener las fallas).
+
+\section{Objetivo del antipatrón de vulnerabilidades}
+El objetivo es encapsular el conocimiento de vulnerabilidades que está presente en bases de datos como CVE o CAPEC, y presentarle este conocimiento al desarrollador usando un enfoque basado en patrones (al que está acostumbrado).
+Disminuir la brecha de conocimiento entre expertos en ciberseguridad y desarrolladores de software.
+
+
+\section{Relación entre patrón y VAP}
+Para mitigar cada antipatrón, se propone un patrón correspondiente, que incluye lo siguiente: contexto, problema, fuerzas y mitigación. Juntos, el anti-patrón y el patrón pueden permitir a los desarrolladores reconocer las causas raíz de una vulnerabilidad y ayudarles a entender cómo esta vulnerabilidad podría ser explotada por hackers malintencionados.
+
+
+Para presentar esta relación se utiliza una plantilla, la cual contendrá toda la información necesaria para que el desarrollador comprenda cual es el origen, el modo de explotación y las maneras de mitigar las diferentes vulnerabilidades que posee su software.

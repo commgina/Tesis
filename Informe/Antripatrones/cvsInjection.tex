@@ -1,0 +1,50 @@
+\chapter{CSV Injection}
+\section{Antipatrón}
+\subsection{Nombre}
+ CSV Injection 
+\subsection{Tambien conocido como}
+Formula Injection. Excel Macro Injection	
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Implementación
+\subsection{Mapeo con CWE}
+CWE-1236
+\subsection{Ejemplos de CVE}
+CVE-2022-46821
+
+\subsection{Ejemplo de antipatrón}
+\begin{itemize}
+    \item https://cwe.mitre.org/data/definitions/1236.html
+\end{itemize}
+\subsection{Fuerzas desbalanceadas}
+\begin{itemize}
+    \item El requerimiento de exportar datos de usuario en formato CSV para su descarga y análisis lleva a la exposición a vulnerabilidades de CSV Injection si no se implementa una sanitización adecuada de los datos exportados.
+    \item El requerimiento de generar reportes (o cualquier tipo de contenido representable en CSV) en formato CSV con datos generados dinámicamente por el usuario lleva a la exposición a CSV Injection si  los valores dinámicos no son controlados.
+\end{itemize}
+\subsection{Attack pattern}
+CAPEC-23
+\subsection{Problema}
+CSV Injection ocurre cuando datos sin sanitizar se exportan en formato CSV y luego son abiertos en aplicaciones que ejecutan automáticamente fórmulas o scripts. Esto puede permitir que se ejecute código en el sistema del usuario al abrir el archivo.
+\subsection{Consecuencias}
+Confidencialidad: los .csv maliciosamente elaborados pueden ser utilizados para tres ataques clave:
+\begin{itemize}
+    \item Secuestrar la computadora del usuario explotando vulnerabilidades en el software de hojas de cálculo.
+    \item Secuestrar la computadora del usuario explotando la tendencia del usuario a ignorar las advertencias de seguridad en hojas de cálculo que descargaron del sitio web.
+    \item Exfiltrar contenido de la hoja de cálculo, o de otras hojas de cálculo abiertas."
+\end{itemize}
+
+
+\section{Patrón}
+\subsection{Solución en el SDLC}
+Implementación: Sanitizar cualquier dato que se exporta en formato CSV, prefijando caracteres peligrosos como =, +, -, o @ con un apóstrofo (') para prevenir la ejecución como fórmula.
+\subsection{Ejemplo de solución}
+\begin{itemize}
+    \item https://www.cyberchief.ai/2024/09/csv-formula-injection-attacks.html
+    \item https://owasp.org/www-community/attacks/CSV\_Injection
+    \item https://patchstack.com/articles/patchstack-weekly-what-is-csv-injection
+\end{itemize}
+\subsection{Related patterns}
+\begin{itemize}
+    \item Sanitizar entradas
+    \item Codificación y escapado de datos
+    \item Facade: Este patrón puede ser implementado para agrupar las tareas relacionadas con la creación de archivos CSV, como la validación de las entradas, la sanitización de los datos (por ejemplo, para evitar la ejecución de fórmulas), y luego generar el archivo CSV de forma segura.
+\end{itemize}

@@ -1,0 +1,104 @@
+\chapter{Apéndice A: SQL Injection}
+
+\section{Antipatrón}
+
+\subsection{Nombre}
+SQL Injection
+
+\subsection{También conocido como}
+Improper Neutralization of Special Elements used in an SQL Command
+
+\subsection{Frecuentemente expuesto en el SDLC} 
+Diseño
+
+\subsection{Mapeo con CWE} 
+CWE-89
+
+\subsection{Ejemplos de CVE} 
+\begin{itemize}
+    \item CVE-2024-7827
+    \item CVE-2024-7857
+    \item CVE-2011-3130
+\end{itemize}
+
+\subsection{Ejemplo de Anti-patrón}
+\begin{itemize}
+    \item https://patchstack.com/academy/wordpress/vulnerabilities/sql-injection/
+    \item https://cwe.mitre.org/data/definitions/89.html
+    
+\end{itemize}
+
+\subsection{Fuerzas desbalanceadas}
+
+\begin{enumerate}
+    \item \textbf{Requerimiento de consultas SQL dinámicas: }El sistema permite a los usuarios realizar consultas dinámicas para buscar o filtrar información en la base de datos. Esta flexibilidad responde a la necesidad de ofrecer funcionalidades avanzadas de búsqueda y acceso a los datos. Sin embargo, cuando este requerimiento se implementa sin el uso de parámetros preparados o procedimientos almacenados, y se permite que los datos de entrada del usuario se inserten directamente en la consulta SQL, se expone una vulnerabilidad de inyección SQL. Esto permite que un atacante modifique la semántica de las consultas SQL inyectando código malicioso.
+    \item \textbf{Requerimiento de autenticación y autorización:} El sistema permite que los usuarios se autentiquen con credenciales personalizadas, como nombres de usuario y contraseñas, y accedan a sus propios recursos. Este requerimiento es común en sistemas con múltiples roles y privilegios. Sin embargo, si los datos de autenticación se insertan directamente en consultas SQL sin un filtro de validación o escape de caracteres especiales, un atacante podría inyectar comandos SQL maliciosos durante el proceso de inicio de sesión. \\
+\end{enumerate}
+
+\subsection{Attack pattern}
+
+\begin{itemize}
+    \item CAPEC-7
+    \item CAPEC-66
+    \item CAPEC-108
+    \item CAPEC-109
+    \item CAPEC-110 
+\end{itemize}
+
+\subsection{Problema}
+
+El sistema no escapa correctamente los caracteres especiales utilizados en la construcción de una consulta SQL, lo que puede alterar el significado de la consulta enviada a la base de datos. Los atacantes pueden inyectar fácilmente su propio código SQL en la consulta ejecutada, lo que permite una amplia variedad de acciones. Por ejemplo, cuando se utilizan consultas SQL en contextos de seguridad, como la autenticación, los atacantes pueden modificar la lógica de esas consultas para obtener acceso no autorizado al ajustar las reglas de autenticación, o eliminando o actualizando registros de la base de datos. 
+Los ataques de inyección SQL pueden dirigirse a consultas SQL construidas directamente por el código de la aplicación, o a consultas realizadas por procedimientos almacenados en el cliente o en el servidor. Varios ataques bien conocidos implican comprometer un sistema mediante la inyección de consultas SQL que contienen código malicioso o contenido de la base de datos. 
+
+\subsection{Consecuancias}
+
+\begin{itemize}
+    \item \textbf{Confidencialidad:} Los adversarios podrían ejecutar comandos del sistema, generalmente modificando la declaración SQL para redirigir la salida a un archivo que luego puede ser ejecutado.
+    \item \textbf{Autenticación:} Si se utilizan comandos SQL deficientes para verificar nombres de usuario y contraseñas o realizar otros tipos de autenticación, puede ser posible conectarse al producto como otro usuario sin tener conocimiento previo de la contraseña.
+    \item \textbf{Control de acceso:} Si la información de autorización se almacena en una base de datos SQL, es posible modificar esta información a través de la explotación exitosa de una vulnerabilidad de inyección SQL.
+    \item \textbf{Integridad:} Al igual que es posible leer información sensible, también es posible modificar o incluso eliminar esta información mediante un ataque de inyección SQL.
+\end{itemize}
+
+\section{\textbf{Patrón}}
+
+\subsection{Solucion en el SDLC}
+
+\textbf{Diseño}
+
+\begin{itemize}
+    \item Seleccionar una biblioteca o marco de trabajo validado que no permita que esta debilidad ocurra o que proporcione constructos que hagan más fácil evitar esta debilidad. WordPress viene con su propia API de base de datos que proporciona métodos seguros para interactuar con la base de datos. Esta API ayuda a prevenir inyecciones SQL mediante el uso de consultas preparadas y funciones de escape. Otras opciones son PDO (PHP data objects) 
+    \item Asegurar el diseño para validar los datos suministrados por los clientes en busca de código malicioso o contenido malformado. Los datos pueden ser basados en formularios, consultas o contenido XML.
+
+
+\end{itemize}
+
+\textbf{Implementación}
+
+\begin{itemize}
+    \item Verificar todas las entradas externas antes de su uso. Utilizar un enfoque de filtros desacoplables y aplicar filtros declarativos basados en URL. Restringir las tareas del filtro para realizar un preprocesamiento de todas las solicitudes y proporcionar validación. Realizar validación del lado del servidor, ya que la validación del lado del cliente no es segura y es susceptible a suplantaciones. Renegociar la confianza entre usuarios después de un intervalo de tiempo específico. Registrar las consultas realizadas e identificar comportamientos irregulares.
+    \item La construcción dinámica de consultas se considera generalmente una práctica de desarrollo insegura, pero en algunos contextos, puede ser inevitable. En estos casos, siempre realizar una sanitización cuidadosa de los argumentos de la consulta con un escape correcto de los caracteres especiales dentro de esos argumentos.
+\end{itemize}
+
+
+\subsection{Ejemplo de Solución}
+
+\begin{itemize}
+    \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/sql-injection/}{Patchstack - SQL Injection}
+    \item \href{https://cheatsheetseries.owasp.org/cheatsheets/SQL\_Injection\_Prevention\_Cheat\_Sheet.html}{OWASP SQL Injection}
+\end{itemize}
+
+\subsection{Patrones relacionados}
+
+\textbf{Interceptor (POSA)} 
+
+Descripción: Un patrón más general, usado para interceptar y modificar el flujo de ejecución en un sistema antes de que un objeto o componente específico lo procese.
+Relación con SQL Injection: Este patrón puede ser implementado para interceptar consultas SQL o solicitudes web y asegurarse de que se sanitizan correctamente antes de ejecutarse en la base de datos.
+
+\textbf{Message Interceptor}
+
+Descripción: Similar al patrón "Intercepting Validator", este patrón intercepta y examina los mensajes de entrada o salida antes de que lleguen a su destino.
+Relación con SQL Injection: Permite detectar y eliminar posibles intentos de inyección SQL antes de que los datos sean procesados por la aplicación.
+
+\textbf{Adapt Pattern}
+
+El Adapter Pattern permite adaptar consultas y asegurar la forma en que los datos se envían a la base de datos. En este contexto, el adaptador puede interceptar y transformar las consultas, asegurándose de que los datos están parametrizados y adecuadamente escapados antes de enviarlos a la base de datos. Esto ayuda a evitar que entradas maliciosas del usuario afecten las consultas SQL.

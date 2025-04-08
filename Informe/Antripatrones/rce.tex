@@ -1,0 +1,61 @@
+\chapter{Remote Code Execution}
+\section{Antipatrón}
+\subsection{Nombre}
+Remote Code Execution.
+\subsection{Tambien conocido como}
+Code Injection. 
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Implementación.
+\subsection{Mapeo con CWE}
+CWE-94
+\subsection{Ejemplos de CVE}
+CVE-2024-50498
+CVE-2024-25600
+CVE-2006-2667
+\subsection{Ejemplo de antipatrón}
+\begin{itemize}
+    \item https://www.invicti.com/learn/remote-code-execution-rce/
+    \item https://patchstack.com/academy/wordpress/vulnerabilities/remote-code-execution/
+    \item https://cwe.mitre.org/data/definitions/94.html
+\end{itemize}
+\subsection{Fuerzas desbalanceadas}
+\begin{itemize}
+    \item Cuando un producto permite que la entrada del usuario contenga sintaxis de código, es posible que un atacante pueda manipular ese código de tal manera que altere el flujo de control previsto del producto. Dicha alteración podría llevar a la ejecución de código arbitrario.
+    \item El producto construye todo o parte de un segmento de código utilizando entradas influenciadas externamente desde un componente ascendente, pero no neutraliza o neutraliza incorrectamente elementos especiales que podrían modificar la sintaxis o el comportamiento del segmento de código previsto.
+\end{itemize}
+\subsection{Attack pattern}
+CAPEC-242
+\subsection{Problema}
+RCE permite que un atacante ejecute comandos o código arbitrario en el servidor. Esto ocurre por errores en la validación y sanitización de entradas, o en el uso inseguro de funciones críticas de ejecución.
+\subsection{Consecuencias}
+\begin{itemize}
+    \item Control de acceso: En algunos casos, el código inyectable controla la autenticación; esto puede conducir a una vulnerabilidad remota. El código inyectado puede acceder a recursos a los que el atacante no puede acceder directamente.
+    \item Integridad, confidencialidad y disponibilidad: Al inyectar código malicioso en el plano de control, un atacante puede alterar la forma en que el sistema interpreta y ejecuta las órdenes, lo que le permite realizar acciones no autorizadas. En algunos casos, los ataques de inyección de código pueden permitir a un atacante obtener acceso a partes del sistema con mayores privilegios, como la base de datos o el sistema operativo. 
+\end{itemize}
+
+\section{Patrón}
+
+\subsection{Solución en el SDLC}
+
+\textbf{Implementación} \\
+
+\begin{itemize}
+    \item Asumir que toda entrada es maliciosa: Tratar todos los datos de entrada como si fueran potencialmente dañinos.
+    \item Utiliza una estrategia de validación de entrada "acepta lo conocido como bueno": Define una lista estricta de entradas válidas y rechaza cualquier entrada que no cumpla con estos criterios o transformala en una entrada válida.
+    \item Validar todas las propiedades relevantes: Considerar la longitud, el tipo de entrada, el rango de valores aceptables, entradas faltantes o adicionales, la sintaxis, la consistencia entre campos relacionados y la conformidad con las reglas de negocio.
+    \item No confíar únicamente en la detección de entradas maliciosas o malformadas: Esto puede dejar pasar entradas no deseadas, especialmente si el entorno del código cambia. Usa listas negras para detectar posibles ataques o rechazar entradas extremadamente malformadas.
+\end{itemize}
+
+\subsection{Ejemplo de solución}
+
+\begin{itemize}
+    \item https://patchstack.com/academy/wordpress/securing-code/remote-code-execution/
+\end{itemize}
+
+\subsection{Related patterns}
+
+\begin{itemize}
+    \item Proxy Pattern: Al actuar como intermediario, el Proxy puede filtrar y validar todas las solicitudes antes de llegar al objeto real. Esto permite implementar mecanismos de autorización y autenticación robustos, evitando que código malicioso se ejecute.
+    \item Sanitizar entradas: Validar y limpiar los datos proporcionados por el usuario antes de utilizarlos en la aplicación. Esto incluye verificar tipos de datos, longitudes, formatos y utilizar listas blancas para restringir los valores permitidos.
+    \item Gestión de memoria: Los desbordamientos de búfer son una causa común de RCE. Utilizar técnicas de asignación y liberación de memoria seguras, realizar análisis de vulnerabilidad de forma regular y aplicar parches a las vulnerabilidades encontradas.
+\end{itemize}

@@ -1,0 +1,64 @@
+\chapter{Arbitrary File Upload}
+\section{Antipatrón}
+\subsection{Nombre}
+Arbitraty File Upload
+\subsection{Tambien conocido como}
+Unrestricted File Upload
+
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Arquitectura
+
+Implementación
+\subsection{Mapeo con CWE}
+CWE-434
+\subsection{Ejemplos de CVE}
+\begin{itemize}
+    \item CVE-2018-14028
+    \item CVE-2024-52490
+    \item CVE-2024-1468
+\end{itemize}
+
+\subsection{Ejemplo de antipatrón}
+\begin{itemize}
+    \item \href{https://cwe.mitre.org/data/definitions/434.html}{CWE}
+    \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/arbitrary-file-upload/}{Patchstack}
+\end{itemize}
+\subsection{Fuerzas desbalanceadas}
+\begin{itemize}
+    \item Esta vulnerabilidad ocurre en aplicaciones web donde existe la posibilidad de subir un archivo sin que sea comprobado por un sistema de seguridad que frene peligros potenciales.
+    \item Le permite a un atacante subir archivos con código (scripts tales como .php o .aspx) y ejecutarlos en el mismo servidor.
+    \item Generalmente se confía únicamente en la extensión del archivo para determinar su tipo, lo que permite a un atacante modificarla para evadir restricciones.
+    \item No se implementan controles de autenticación o autorización adecuados, permitiendo que cualquier usuario suba archivos sin restricciones.
+\end{itemize}
+
+\subsection{Attack pattern}
+CAPEC-1
+\subsection{Problema}
+El producto permite la carga o transferencia de tipos de archivos peligrosos que son procesados automáticamente dentro de su entorno.
+\subsection{Consecuencias}
+\textbf{Confidencialidad, integridad, disponibilidad:} Las consecuencias de esta vulnerabilidad pueden ser graves, ya que se podría ejecutar código arbitrario si un archivo cargado es interpretado y ejecutado como código por el receptor. Esto es especialmente cierto para extensiones de servidor web como .asp y .php, ya que estos tipos de archivo a menudo se tratan como ejecutables de manera automática, incluso cuando los permisos del sistema de archivos no especifican la ejecución. Por ejemplo, en entornos Unix, los programas generalmente no pueden ejecutarse a menos que se haya establecido el permiso de ejecución, pero los programas PHP pueden ser ejecutados por el servidor web sin necesidad de invocarlos directamente en el sistema operativo. Esto podría permitir a un atacante ejecutar código malicioso en el servidor, comprometiendo la seguridad del sistema y los datos.
+\section{Patrón}
+\subsection{Solución en el SDLC}
+Arquitectura
+\begin{itemize}
+    \item Generar un nuevo nombre de archivo único para los archivos cargados en lugar de utilizar el nombre proporcionado por el usuario, de modo que no se utilice ninguna entrada externa.
+    \item Cuando el conjunto de objetos aceptables, como nombres de archivo o URLs, esté limitado o sea conocido, crear un mapeo de un conjunto de valores de entrada fijos (como IDs numéricos) a los nombres de archivo o URLs reales, y rechazar todas las demás entradas.
+    \item Considerar almacenar los archivos cargados fuera del directorio raíz del servidor web por completo. Luego, utilizar otros mecanismos para entregar los archivos de manera dinámica.
+    \item Definir un conjunto muy limitado de extensiones permitidas y solo generar nombres de archivo que terminen con estas extensiones.
+\end{itemize}
+
+Implementación
+\begin{itemize}
+    \item Realizar evaluaciones insensibles a mayúsculas de las extensiones proporcionadas en caso de que el servidor soporte nombres de case-sensitive.
+    \item No confiar unicamente en la validacion del contenido del archivo ya que un atacante podría esconder código malicioso en segmentos del archivo que pasen desapercibidos durante la validación. Por ejemplo, en los archivos de imagen GIF, aunque la mayor parte del archivo sea una imagen, puede haber un campo adicional para comentarios, que permite incluir texto libre. Un atacante podría insertar código malicioso dentro de ese campo.
+    \item No confiar exclusivamente en el tipo de contenido MIME o el atributo del nombre de archivo para determinar cómo representar un archivo. Validar el tipo de contenido MIME y asegurarse de que coincida con la extensión es solo una solución parcial.
+\end{itemize}
+\subsection{Ejemplo de solución}
+\href{https://patchstack.com/academy/wordpress/securing-code/arbitrary-file-upload/}{Patchstack}
+\subsection{Related patterns}
+\begin{itemize}
+    \item Factory Pattern: Este patrón puede ser útil para controlar el proceso de creación de archivos o el manejo de la carga de archivos. En lugar de permitir que los usuarios suban archivos arbitrarios de forma directa, el patrón Factory puede centralizar la creación de archivos, aplicando validaciones sobre el tipo y tamaño de los archivos antes de permitir su almacenamiento.
+    \item Decorator pattern: permite añadir funcionalidades adicionales a objetos de manera dinámica. Puede ser utilizado para envolver el proceso de carga de archivos y agregar características de seguridad como la validación del tipo de archivo, el escaneo de virus o la renombración del archivo antes de almacenarlo.
+\end{itemize}
+
+

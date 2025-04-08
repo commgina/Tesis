@@ -1,0 +1,66 @@
+\chapter{Arbitrary File Download}
+\section{Antipatrón}
+\subsection{Nombre}
+Arbitraty File Download
+\subsection{Tambien conocido como}
+Unrestricted File Read
+
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Arquitectura
+
+Implementación
+\subsection{Mapeo con CWE}
+CWE-22
+\subsection{Ejemplos de CVE}
+\begin{itemize}
+    \item CVE-2024-52378
+    \item CVE-2024-52481
+\end{itemize}
+
+\subsection{Ejemplo de antipatrón}
+\begin{itemize}
+    \item \href{https://cwe.mitre.org/data/definitions/22.html}{CWE}
+    \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/arbitrary-file-read/}{Patchstack}
+\end{itemize}
+\subsection{Fuerzas desbalanceadas}
+
+ \begin{itemize}
+     \item El sistema permite acceder a archivos del servidor en función de entradas proporcionadas por el usuario, lo que puede llevar a la exposición de archivos sensibles si no se controla adecuadamente la ruta solicitada.
+     \item Permitir la descarga de archivos arbitrarios sin restricciones permitiendo que cualquier archivo dentro del servidor sea accesible por cualquier usuario.
+ \end{itemize}
+ 
+\subsection{Attack pattern}
+CAPEC-126: Path Traversal
+\subsection{Problema}
+El producto permite la lectura o descarga de archivos a los que el usuario no debería tener acceso.
+\subsection{Consecuencias}
+Conficencialidad: El atacante podría ser capaz de leer el contenido de archivos ines-
+perados y exponer datos sensibles. Si el archivo objetivo es utilizado por un mecanismo de
+seguridad, el atacante podría eludir ese mecanismo. Por ejemplo, al leer un archivo de contrase-
+ñas, el atacante podría realizar ataques de fuerza bruta para intentar adivinar las contraseñas
+y acceder a una cuenta en el sistema.
+\section{Patrón}
+\subsection{Solución en el SDLC}
+
+Arquitectura
+\begin{itemize}
+    \item Configurar correctamente el control de acceso.
+    \item Limita las rutas de acceso a directorios específicos, de modo que el sistema nunca acceda fuera de esos directorios.
+    \item Almacenar los archivos fuera del directorio raíz del servidor web (por ejemplo, fuera de la carpeta public\_html en servidores Apache) para que no sean directamente accesibles mediante solicitudes HTTP.
+\end{itemize}
+
+Implementación
+\begin{itemize}
+    \item Usar referencias indirectas en lugar de nombres de archivos reales. Crear un mapeo desde un conjunto de valores de entrada fijos (como IDs numéricos) hacia los nombres de archivos o URLs reales, y rechaza todas las demás entradas. Por ejemplo, el ID 1 podría mapear a "inbox.txt" y el ID 2 podría mapear a "profile.txt". 
+\end{itemize}
+
+\subsection{Ejemplo de solución}
+\href{https://patchstack.com/academy/wordpress/securing-code/arbitrary-file-deletion/}{PatchStack - File Deletion}
+\subsection{Related patterns}
+\begin{itemize}
+    \item Facade Pattern: puede proporcionar una interfaz simplificada y controlada para el acceso
+    a recursos del sistema de archivos, permitiendo que las rutas de archivo sean verificadas
+    y sanitizadas antes de que se realicen las operaciones de lectura o escritura.
+    \item Proxy: El patrón Proxy actúa como un intermediario entre el cliente y el recurso real (en este caso, los archivos). Puede controlar el acceso a los archivos y asegurarse de que solo los usuarios autorizados o los archivos específicos sean accesibles.
+\end{itemize}
+

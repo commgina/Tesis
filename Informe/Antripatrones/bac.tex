@@ -1,0 +1,114 @@
+
+\chapter{Apéndice C: Broken Access Control}
+
+\section{Antripatrón}
+
+\subsection{Nombre}
+Broken Access Control
+\subsection{También conocido como}
+Improper Access Control
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Implementación
+\subsection{Mapeo con CWE}
+CWE-284 (Pillar). Relacionado con:
+\begin{itemize}
+    \item CWE-862
+    \item CWE-863
+    \item CWE-732
+    \item CWE-306
+    \item CWE-1390
+    \item CWE-286
+    \item CWE-923
+\end{itemize}
+El control de acceso es un componente crítico en la seguridad de las aplicaciones y sistemas, y abarca varios mecanismos (AAA) claves de protección, entre ellos:
+
+    \begin{itemize}
+        \item Autenticación: asegura la identidad del actor que intenta interactuar con el sistema.
+        \item Autorización: verifica que el actor autenticado tenga los permisos adecuados para acceder a un recurso o realizar una acción.
+        \item Responsabilidad (Accountability): permite rastrear y registrar las actividades que realizan los actores, facilitando auditorías y la detección de comportamientos indebidos.
+    \end{itemize}
+
+Dado que el control de acceso cubre múltiples capas de seguridad, cualquier error o debilidad en estos mecanismos puede conducir a vulnerabilidades críticas. Existen numerosas vulnerabilidades registradas en las CWE que están relacionadas con la falta de control de acceso adecuado (BAC). Estas vulnerabilidades pueden variar considerablemente dependiendo de qué aspecto del control de acceso se ataque: desde saltos en la autenticación, hasta escaladas de privilegios o manipulación no autorizada de datos.
+
+A raíz de esto elegí como CWE principal el 284 porque es un pillar. Los \textbf{Pillars }son la categoría más abstracta en el esquema de CWE. Representan los problemas más amplios y conceptuales de seguridad, sin depender de ningún contexto específico de tecnología, software o lenguaje de programación. Los pillars abarcan una gran variedad de debilidades comunes y sirven como la base para organizar problemas de seguridad que podrían surgir en cualquier sistema. Siguiendo el orden de abstracción se encuentran las \textbf{clases} y por último las \textbf{bases}. 
+
+\textbf{Por ej.:} Dentro del pillar CWE-284 se encuentra la clase CWE-285 Improper Authorization. Esta clase describe la vulnerabilidad de productos que no realizan o realizan mal el checkeo de autorización cuando un actor intenta acceder a un recurso. A su vez esta clase es padre de la base CWE-552 que describe la vulnerabilidad de productos como servidores WEB o servidores FPT que no verifican la autorización correctamente, dejando accesible archivos o directorios del sistema.
+
+Para el desarrollo de este VAP, usaré un enfoque general para abarcar todos los tipos de BAC. Los ejemplos serán enfocados a Wordpress.
+
+\subsection{Ejemplos de CVE}
+
+\begin{itemize}
+    \item CVE-2023-35093
+    \item CVE-2022-45353
+    \item CVE-2022-42460
+\end{itemize}
+
+\subsection{Ejemplo de antipatrón}
+
+\begin{itemize}
+    \item https://patchstack.com/academy/wordpress/vulnerabilities/broken-access-control/
+    \item https://owasp.org/Top10/es/A01\_2021-Broken\_Access\_Control/
+\end{itemize}
+
+\subsection{Fuerzas desbalanceadas}
+
+\begin{itemize} 
+    \item Control de acceso basado en rutas URL: La necesidad de ofrecer acceso a ciertas funcionalidades a través de URL específicas (por ejemplo, /admin, /usuario/{id}) puede llevar a que usuarios no autorizados modifiquen las URL para acceder a recursos restringidos si no se aplica una validación de acceso adecuada en el backend.
+    \item Persistencia de sesión en múltiples dispositivos: La necesidad de permitir el acceso a la aplicación desde varios dispositivos y sesiones concurrentes puede llevar a situaciones de control de acceso roto si no se verifican de manera adecuada las sesiones activas y los permisos asociados en cada solicitud.
+    \item Control de acceso en API externas: Cuando la aplicación requiere consumir o exponer servicios a través de API, si no se implementan controles de acceso en los endpoints o tokens de autenticación y autorización adecuados, los usuarios pueden acceder a datos o funcionalidades para los que no están autorizados.
+\end{itemize}
+
+\subsection{Attack pattern}
+
+\begin{itemize}
+    \item CAPEC-284
+    \item CAPEC-180
+    \item CAPEC-58
+    \item CAPEC-122
+\end{itemize}
+
+
+\subsection{Problema}
+
+El sistema permite que los usuarios accedan a funciones o datos que deberían estar restringidos, lo que puede resultar en la exposición de información sensible, modificación de datos, o la realización de acciones no autorizadas. A veces, los desarrolladores realizan la autenticación en el canal principal, pero abren un canal secundario que suponen que es privado. Por ejemplo, un mecanismo de inicio de sesión puede estar escuchando en un puerto de red, pero después de una autenticación exitosa, podría abrir un segundo puerto donde espera la conexión, pero omite la autenticación porque asume que solo la parte autenticada se conectará a ese puerto.
+
+\subsubsection{Consecuencias}
+\begin{itemize} 
+\item \textbf{Confidencialidad}
+Impacto técnico: Leer datos de la aplicación; Leer archivos o directorios.
+Un atacante podría leer datos sensibles, ya sea accediendo directamente a una fuente de datos que no esté correctamente restringida, o mediante el acceso a funciones privilegiadas insuficientemente protegidas para leer dichos datos.
+
+\item \textbf{Integridad}
+Impacto técnico: Modificar datos de la aplicación; Modificar archivos o directorios.
+Un atacante podría modificar datos sensibles, ya sea escribiendo directamente en una fuente de datos que no esté correctamente restringida, o accediendo a funciones privilegiadas insuficientemente protegidas para escribir los datos.
+
+\item \textbf{Control de acceso}
+Impacto técnico: Obtener privilegios o asumir identidad; Eludir mecanismos de protección.
+Un atacante podría obtener privilegios al modificar o leer datos críticos directamente, o accediendo a funciones privilegiadas.
+\end{itemize}
+
+\section{Patrón}
+
+\subsubsection{Solución en el SDLC} \textbf{Diseño} \begin{itemize} \item Implementar controles de acceso desde la etapa de diseño y realizar revisiones de seguridad periódicas. \item Establecer políticas claras de permisos para cada rol de usuario y documentarlas adecuadamente. \item Utilizar técnicas como el principio de menor privilegio para limitar el acceso a recursos sensibles. \end{itemize}
+
+\textbf{Implementación} \begin{itemize} \item Validar los permisos del usuario antes de permitir el acceso a recursos o funciones sensibles. \item No exponer identificadores de recursos directamente en las solicitudes. \item Realizar pruebas de seguridad para identificar y corregir problemas de control de acceso. \end{itemize}
+
+\subsection{Solución}
+
+\begin{itemize}
+    \item \href{https://patchstack.com/academy/wordpress/securing-code/broken-access-control/}{Patchstack}
+\end{itemize}
+
+\subsection{Related patterns}
+
+\begin{itemize} 
+\item \textbf{Proxy Pattern: }Este patrón es ideal para implementar un control de acceso centralizado y eficiente. Al interponer un proxy entre el cliente y los objetos sensibles o restringidos, se puede interceptar cada solicitud y validar los permisos antes de otorgar acceso.
+\item \textbf{Decorator: }Este patrón puede ser usado para envolver objetos con capas adicionales de seguridad. Por ejemplo, un decorador podría agregar validaciones de permisos, controles de acceso y logging en tiempo de ejecución, permitiendo reforzar las reglas de acceso y ajustar dinámicamente los controles a nivel de función.
+\item \textbf{Input Validation} 
+\href{https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html}{OWASP - Input Validation}
+\item \textbf{Output Encoding}
+\href{https://qwiet.ai/appsec-101-output-encoding/}{Output Encoding}
+\item \textbf{Session Management}
+\href{https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html}{Session Management}
+\end{itemize}

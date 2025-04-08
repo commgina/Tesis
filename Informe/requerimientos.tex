@@ -1,0 +1,158 @@
+\chapter{Requerimientos}
+
+\paragraph{Introducción.}
+Este capítulo tiene como propósito definir los requerimientos funcionales y no funcionales para el desarrollo de una API que permitirá consultar una base de datos de antipatrones de vulnerabilidades. El sistema permitirá a los usuarios realizar consultas sobre una vulnerabilidad específica, ya sea proporcionando un CVE ID, el nombre de un plugin o tema de WordPress, o directamente del core de WordPress. Dado que cada vulnerabilidad tiene un CWE asociado, la API proporcionará información sobre el antipatrón relacionado con ese CWE con el objetivo de educar a los desarrolladores en buenas prácticas de seguridad. Para determinar el CWE, el sistema consultará la API de WP Vulnerability Database sobre la vulnerabilidad en cuestión.
+
+\paragraph{Alcance.}
+
+El software está diseñado para desarrolladores de WordPress que desean obtener información sobre vulnerabilidades y mejores prácticas de ciberseguridad en las diferentes etapas del SDLC. A través de diferentes endpoints y una interfaz sencilla, el sistema permitirá consultar vulnerabilidades tanto del core de WordPress como de plugins y temas, y proporcionará recomendaciones de seguridad basadas en antipatrones.
+
+
+\section{Requerimientos funcionales}
+
+\subsection{RF1: Consulta de CVE}
+
+\textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /cve/{cve-id} para obtener detalles sobre un CVE específico. La respuesta incluirá la información de la vulnerabilidad y del antipatrón de vulnerabilidad si está disponible.
+
+\textbf{Endpoint:} GET /cve/{cve-id}
+
+\textbf{Parámetros de entrada:} 
+\begin{itemize}
+    \item cve-id (obligatorio): ID del CVE, por ejemplo, CVE-2023-1234.
+\end{itemize}
+
+\textbf{Respuestas:}
+
+\begin{itemize}
+    \item 200 OK: Devuelve el CWE y el antipatrón asociado al CVE.
+    \item 400 Bad Request: Si el formato del CVE ingresado no es válido.
+    \item 404 Not Found: El CVE no existe.
+\end{itemize}
+
+
+\textbf{Flujo normal:}
+
+\begin{enumerate}
+    \item El usuario envía una solicitud GET al endpoint con un CVE.
+    \item El sistema consulta la API de WP Vulnerability Database.
+    \item Se obtiene el CWE y, basado en eso, el antipatrón de la base de datos interna.
+    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón.
+\end{enumerate}
+
+\subsection{RF2: Consulta de versión del Kernel de Wordpress}
+
+\textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /core/{wordpress-version} para obtener detalles sobre una versión de Wordpress en específico. La respuesta incluirá la información de las vulnerabilidades de esa versión y de sus antipatrones relacionados.
+
+\textbf{Endpoint:} GET /core/{wordpress-version}
+
+\textbf{Parámetros de entrada:}
+
+\begin{itemize}
+    \item wordpress-version (obligatorio): versión de wordpress por la que quiere consultar. Ej.: 6.6.2
+\end{itemize}
+
+\textbf{Respuestas:}
+
+\begin{itemize}
+    \item 200 OK: Devuelve las vulnerabilidades de la versión con sus respectivos CWE y antipatrones.
+    \item 400 Bad Request: Si el formato de la versión ingresada no respeta el el versionado semántico.
+\end{itemize}
+
+\textbf{Flujo normal:}
+
+\begin{enumerate}
+    \item El usuario envía una solicitud GET al endpoint con una versión de Wordpress.
+    \item El servicio consulta la API de WP Vulnerability Database.
+    \item Se obtienen todas las vulnerabilidades de esa versión y se vincula cada CWE con un antipatrón.
+    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón.
+\end{enumerate}
+
+\subsection{RF3: Consulta de plugin de Wordpress}
+
+\textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /plugins/{plugin-name}/{plugin-version} para obtener detalles sobre una versión de un plugin en específico. La respuesta incluirá la información de las vulnerabilidades de esa versión y de sus antipatrones relacionados. También podrá no especificarse la versión y obtener respuesta sobre todas las versiones de ese plugin.
+
+\textbf{Endpoint:} GET /plugins/{plugin-name}/{plugin-version}
+
+\textbf{Parámetros de entrada: }
+
+\begin{itemize}
+    \item plugin-name (obligatorio): nombre del plugin por el que se quiere consultar.
+    \item plugin-version (opcional): versión del plugin por la que se quiere consultar.
+\end{itemize}
+
+\textbf{Respuestas:}
+
+\begin{itemize}
+    \item 200 OK: Devuelve las vulnerabilidades de la versión con sus respectivos CWE y antipatrones.
+    \item 400 Bad Request: Si el formato de la versión ingresada no respeta el versionado semántico.
+\end{itemize}
+
+\textbf{Flujo normal 1:}
+
+\begin{enumerate}
+    \item El usuario envía una solicitud GET al endpoint con una versión de un plugin de Wordpress.
+    \item El servicio consulta la API de WP Vulnerability Database.
+    \item Se obtienen todas las vulnerabilidades del plugin en esa versión y se vincula cada CWE con un antripatrón.
+    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
+\end{enumerate}
+
+\textbf{Flujo normal 2:}
+
+\begin{enumerate}
+    \item El usuario envía una solicitud GET al endpoint con el nombre de un plugin de Wordpress sin especificar una versión.
+    \item El servicio consulta la API de WP Vulnerability Database.
+    \item Se obtienen todas las vulnerabilidades del plugin en todas sus versiones y se vincula cada CWE con un antripatrón.
+    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
+\end{enumerate}
+
+\subsection{RF4: Consulta de tema de Wordpress}
+
+\textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /themes/{theme-name}/{theme-version} para obtener detalles sobre una versión de un tema en específico. La respuesta incluirá la información de las vulnerabilidades de esa versión y de sus antipatrones relacionados.  También podrá no especificarse la versión y obtener respuesta sobre todas las versiones de ese tema.
+
+\textbf{Endpoint:} GET /themes/{theme-name}/{theme-version}
+
+\textbf{Parámetros de entrada: }
+
+\begin{itemize}
+    \item theme-name (obligatorio): nombre del tema por el que se quiere consultar.
+    \item theme-version (opcional): versión del tema por la que se quiere consultar.
+\end{itemize}
+
+\textbf{Respuestas:}
+
+\begin{itemize}
+    \item 200 OK: Devuelve las vulnerabilidades de la versión con sus respectivos CWE y antipatrones.
+    \item 400 Bad Request: Si el formato de la versión ingresada no respeta el versionado semántico.
+\end{itemize}
+
+\textbf{Flujo normal 1:}
+
+\begin{enumerate}
+    \item El usuario envía una solicitud GET al endpoint con una versión de un tema de Wordpress.
+    \item El servicio consulta la API de WP Vulnerability Database.
+    \item Se obtienen todas las vulnerabilidades del tema en esa versión y se vincula cada CWE con un antripatrón.
+    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
+\end{enumerate}
+
+\textbf{Flujo normal 2:}
+
+\begin{enumerate}
+    \item El usuario envía una solicitud GET al endpoint con el nombre de un tema de Wordpress sin especificar una versión.
+    \item El servicio consulta la API de WP Vulnerability Database.
+    \item Se obtienen todas las vulnerabilidades del tema en todas sus versiones y se vincula cada CWE con un antripatrón.
+    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
+\end{enumerate}
+
+\subsection{RF5: Base de Datos de Antipatrones}
+
+El sistema deberá contar con una base de datos que almacene los CWE y sus correspondientes VAP.
+
+\section{Requerimientos no funcionales}
+
+\subsection{RNF1: Seguridad}
+
+RNF1: El sistema debe implementar medidas de seguridad que protejan las consultas contra ataques de inyección, DDoS y otras amenazas comunes.
+
+\subsection{RNF1: Disponibilidad}
+
+RNF2: El sistema debe estar disponible 24/7 con un tiempo de inactividad permitido de no más del 1\% al mes.

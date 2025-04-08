@@ -1,0 +1,61 @@
+\chapter{Arbitrary File Deletion}
+\section{Antipatrón}
+\subsection{Nombre}
+Arbitrary File Deletion
+\subsection{Tambien conocido como}
+Arbitrary File Deletion
+
+\subsection{Frecuentemente expuesto en la etapa del SDLC}
+Arquitectura
+
+Implementación
+\subsection{Mapeo con CWE}
+CWE-22: Arbitrary File Deletion no es mas que una consecuencia de Path Traversal en la que el atacante accede sin autorización a un directorio y borra archivos.
+\subsection{Ejemplos de CVE}
+\begin{itemize}
+    \item CVE-2024-12035
+    \item CVE-2025-1282
+\end{itemize}
+\subsection{Ejemplo de antipatrón}
+\begin{itemize}
+    \item \href{https://patchstack.com/articles/common-plugin-vulnerabilities-how-to-fix-them/}{Patchstack}
+    \item \href{https://www.php.net/unlink}{Unlink}
+    \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/arbitrary-file-deletion/}{Arbitraty File Deletion}
+\end{itemize}
+
+\subsection{Fuerzas desbalanceadas}
+Acceso directo a archivos del servidor: El sistema permite acceder a archivos del servidor en función de entradas proporcionadas por el usuario, lo que puede llevar a la exposición de archivos sensibles si no se controla adecuadamente la ruta solicitada.
+
+\subsection{Attack pattern}
+CAPEC-126: Path Traversal
+\subsection{Problema}
+a aplicación permite que un usuario elimine archivos en el servidor sin las restricciones adecuadas. Esto ocurre cuando el nombre o la ruta del archivo a eliminar se construyen a partir de datos proporcionados por el usuario, sin una validación o filtrado correcto.
+En el contexto de WP esto ocurre con la funcion \href{https://www.php.net/unlink}{unlink} de PHP que borra archivos. El usuario provee el argumento que se le pasara a la función pudiendo ser este el nombre de un archivo o el path a cualquier archivo del sistema.
+\subsection{Consecuencias}
+Disponibilidad: Un atacante podría eliminar archivos críticos del sistema, lo que podría causar fallos en la aplicación o incluso impedir que se ejecute correctamente.
+Integridad: la eliminacion de un archivo critico podria generar la inestabilidad o mal funcionamiento del sistema.
+\section{Patrón}
+\subsection{Solución en el SDLC}
+
+Arquitectura
+\begin{itemize}
+    \item Configurar correctamente el control de acceso.
+    \item Limita las rutas de acceso a directorios específicos, de modo que el sistema nunca acceda fuera de esos directorios.
+    \item Almacenar los archivos fuera del directorio raíz del servidor web (por ejemplo, fuera de la carpeta public\_html en servidores Apache) para que no sean directamente accesibles mediante solicitudes HTTP.
+\end{itemize}
+
+Implementación
+\begin{itemize}
+    \item Usar referencias indirectas en lugar de nombres de archivos reales. Crear un mapeo desde un conjunto de valores de entrada fijos (como IDs numéricos) hacia los nombres de archivos o URLs reales, y rechaza todas las demás entradas. Por ejemplo, el ID 1 podría mapear a "inbox.txt" y el ID 2 podría mapear a "profile.txt". 
+\end{itemize}
+
+\subsection{Ejemplo de solución}
+\href{https://patchstack.com/academy/wordpress/securing-code/arbitrary-file-deletion/}{Arbitrary File Deletion - Securing code}
+\subsection{Related patterns}
+\begin{itemize}
+    \item Facade Pattern: puede proporcionar una interfaz simplificada y controlada para el acceso
+    a recursos del sistema de archivos, permitiendo que las rutas de archivo sean verificadas
+    y sanitizadas antes de que se realicen las operaciones de lectura o escritura.
+    \item Proxy: El patrón Proxy actúa como un intermediario entre el cliente y el recurso real (en este caso, los archivos). Puede controlar el acceso a los archivos y asegurarse de que solo los usuarios autorizados o los archivos específicos sean accesibles.
+\end{itemize}
+

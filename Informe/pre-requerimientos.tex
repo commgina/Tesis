@@ -1,0 +1,37 @@
+
+\section{Análisis de APIs: CPE, CVE, Patchstack o WP Vulnerability Database}
+
+\subsection*{Objetivo del análisis}
+El objetivo de este análisis es verificar la validez de las diferentes fuentes de vulnerabilidades de WordPress con el fin de elegir una que dé resultados correctos y al mismo tiempo sea práctica de utilizar.
+
+\subsection*{Consideraciones para las búsquedas}
+Para enfocar las búsquedas del usuario exclusivamente en productos relacionados con WordPress, sería recomendable agregar automáticamente la palabra \textit{WordPress} a las consultas realizadas por los usuarios. Por ejemplo, si el usuario busca “elementor 2.42”, el sistema debería transformar esta entrada en “WordPress elementor 2.42” antes de enviarla a la API de CVE.
+
+El objetivo de este enfoque es evitar que la API procese productos que no estén relacionados con WordPress, como por ejemplo \textit{Windows}, y así reducir el número de resultados irrelevantes que el sistema tendría que procesar.
+
+\subsection*{Comparación de resultados}
+Para verificar la viabilidad de esta idea, se compararon los resultados obtenidos buscando \textit{WordPress elementor} en la API de CVE con los resultados obtenidos en la base de datos de vulnerabilidades de Patchstack.
+
+\begin{itemize}
+    \item La cantidad de vulnerabilidades en Patchstack es generalmente mayor, ya que incluye vulnerabilidades recientes (\textit{zero day vulnerabilities}) que aún no tienen un CVE ID asignado.
+    \item Al buscar \textit{WordPress elementor} en la API de CVE, se obtuvieron 531 CVEs publicados.
+    \item En comparación, al realizar una búsqueda similar en Patchstack, se encontraron 760 vulnerabilidades. Esto se debe a que muchas vulnerabilidades en Patchstack aún no cuentan con un CVE ID, o algunas tienen ID repetidos.
+\end{itemize}
+
+\subsection*{Otras opciones viables}
+Otra opción viable es la WP Vulnerability Database, una API gratuita que está enfocada exclusivamente en WordPress y recopila información de múltiples fuentes, como:
+
+\begin{itemize}
+    \item Common Vulnerabilities and Exposures (CVE)
+    \item Japan Vulnerability Notes (JVN)
+    \item Patchstack Vulnerability Database
+    \item Wordfence Vulnerability Database
+    \item WPScan Vulnerability Database
+\end{itemize}
+
+Los resultados obtenidos de WP Vulnerability Database son similares a los de Patchstack, ya que también ofrece datos de vulnerabilidades de día cero. Además, permite consultar tres endpoints diferentes según si lo que se busca es sobre el \textit{core} de WordPress, un plugin o un tema.
+
+\subsection*{Conclusión}
+Tras evaluar las distintas opciones, la API de WP Vulnerability Database parece ser la opción más adecuada para este proyecto, ya que permite consultas enfocadas en productos de WordPress, es práctica al tener tres endpoints por separado y además es gratuita. Sin embargo, habrá que filtrar los resultados para solo obtener vulnerabilidades registradas.
+
+Este análisis era necesario para poder avanzar con los requerimientos. Si se elegía CVE como base de datos, habría que modificar el \textit{input} del usuario para que los resultados obtenidos sean solo de WordPress. Al usar WP Vulnerability Database, esto ya está asegurado.

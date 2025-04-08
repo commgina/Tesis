@@ -1,0 +1,89 @@
+\chapter{Vulnerabilidades de Wordperss}
+
+La tabla \ref{tabla:2} contiene un catálogo de antipatrones relacionados a vulnerabilidades más comunes de Wordpress. Este catálogo fue elaborado en base a la lista proporcionada por Patchstack\cite{Patchstack} , una herramienta especializada en proteger sitios Wordpress. Algunas plantillas incluyen dos vulnerabilidades como el caso de Remote File Inclusion y Local File inclusion. Esto se hizo asi ya que comparten todo excepto el origen desde donde se incluye un archivo. Si el origen es local o remoto no tiene que ver con la causa de la vulnerabilidad, que es la falta de restriccion y validacion de la entrada del usuario.
+
+Race Condition
+
+
+\newpage
+
+\begin{table}[H]
+\centering
+\caption{Top de Vulnerabilidades de Wordpress}
+\label{tabla:2}
+\begin{tabular}{|l|l|l|}
+\hline
+Mala práctica de desarrollo &
+  V &
+  VAP \\ \hline
+\begin{tabular}[c]{@{}l@{}}Ocurre cuando el software no valida/sanitiza \\ correctamente el input del usuario \\ permitiendo ejecutar comandos SQL.\end{tabular} &
+  SQL Injection &
+  SQL Injection \\ \hline
+\begin{tabular}[c]{@{}l@{}}Ocurre cuando las variables de entrada \\ de los usuarios no se escapan adecuadamente\\ (en la salida) ni se sanitizan correctamente \\ (en la entrada).\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Cross Site \\ Scripting (XSS)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Cross Site \\ Scripting (XSS)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Cuando la autorización y/o autenticación\\ del usuario no se verifica adecuadamente. \\ Esto significa que el sistema noimpide que los \\ usuarios accedan a recursos o realicen acciones\\ para las que no tienen permisos.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Broken \\ Access \\ Control\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Broken \\ Access \\ Control\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}La aplicación web no verifica suficientemente\\ que la fuente de la solicitud sea la misma que\\ el objetivo de la solicitud. Esto permite que un\\ comando (disparado desde una aplicación\\ maliciosa)se envíe a un sitio web confiable \\ utilizando el \\ navegador del usuario.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Cross-Site \\ Request \\ Forgery \\ (CSRF)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Cross-Site \\ Request \\ Forgery \\ (CSRF)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No validar correctamente las URLs o las\\ solicitudes salientes, permitiendo que un \\ atacante envíe solicitudes a direcciones \\ no autorizadas.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Server-Side \\ Request Forgery \\ (SSRF)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Server-Side \\ Request Forgery \\ (SSRF)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No sanitizar las entradas del usuario al \\ permitirque se especifiquen rutas de archivos,\\ lo que permite acceder a directorios y archivos\\ sensibles en el servidor.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Directory \\ Traversal\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Directory \\ Traversal\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Permitir la inclusión de archivos locales en \\ el servidor, lo que puede llevar a la divulgación\\ de información sensible.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Local File \\ Inclusion (LFI)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Local File \\ Inclusion (LFI)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No restringir adecuadamente las URLs o las \\ fuentes de archivos que pueden ser incluidos,\\ lo que puede resultar en la ejecución de código \\ malicioso en el servidor.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Remote File\\ Inclusion (RFI)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Remote File\\ Inclusion (RFI)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Permite a un atacante ejecutar código arbitrario\\ en el servidor, comprometiendo completamente\\ el sistema.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Remote Code\\  Execution (RCE)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Remote Code\\  Execution (RCE)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No sanitizar adecuadamente los datos que se \\ exportan a CSV, permitiendo que un atacante \\ inserte comandos que podrían ser\\ ejecutados al abrir el archivo.\end{tabular} &
+  CSV Injection &
+  CSV Injection \\ \hline
+\begin{tabular}[c]{@{}l@{}}No aplicar controles de acceso adecuados \\ puede llevar a la divulgación no autorizada \\ de información confidencial debido a \\ configuraciones inadecuadas o \\ vulnerabilidades.\end{tabular} &
+  Data Exposure &
+  Data Exposure \\ \hline
+\begin{tabular}[c]{@{}l@{}}Permite a un atacante acceder a objetos \\ (como archivos o registros) sin autorización \\ mediante la manipulación de parámetros \\ en la URL.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Insecure Direct \\ Object Reference\\ (IDOR)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Insecure Direct \\ Object Reference\\ (IDOR)\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\begin{tabular}[c]{@{}l@{}}No implementar un control de acceso \\ adecuado. Ocurre cuando un usuario obtiene\\ niveles de acceso más altos de los permitidos,\\ permitiendo acciones no autorizadas.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Privilege \\ Escalation\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Privilege \\ Escalation\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No implementar mecanismos de\\ sincronización adecuados para asegurar que \\ las operaciones críticas no sean ejecutadas \\ simultáneamente. Pueden ocurrir en funciones\\ que ejecutan transacciones que los usuarios \\ solo deberían poder ejecutar una vez, como en \\ sistemas de votación o de calificación\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Race \\ Condition\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Race \\ Condition\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Ocurre cuando un archivo subido por un\\ usuario no se verifica correctamente su extensión,\\ lo que podría permitir que un archivo .phpsea \\ cargado, resultando en una posible toma de control\\ total del sitio web.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Arbitrary \\ File Upload\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Arbitrary \\ File Upload\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No restringir el acceso a los archivos que\\ se pueden descargar. Permite a un atacante\\ descargar archivos sensibles del servidor \\ mediante manipulaciones en las solicitudes.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Arbitrary \\ File Download\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Arbitrary \\ File Download\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No validar las entradas del usuario. Permite\\ a un atacante eliminar archivos sensibles del\\ servidor mediante manipulaciones\\ en las solicitudes.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Arbitrary \\ File Deletion\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Arbitrary \\ File Deletion\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}No limitar la tasa de solicitudes o el \\ uso de recursos. El atacante busca hacer que\\ un servicio sea inaccesible para los usuarios \\ legítimos al agotar sus recursos o interrumpir\\ su funcionamiento.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Denial of \\ Service (DoS)\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Denial of \\ Service (DoS)\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Se refiere a la confusión entre diferentes \\ tipos de datos en un lenguaje de programación,\\ lo que puede llevar a vulnerabilidades de \\ seguridad si se aprovechan las comparaciones\\ débiles.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Type Juggling \\ / Loose String \\ Comparison\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Type Juggling \\ / Loose String \\ Comparison\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Surge cuando los valores proporcionados\\ por el usuario son deserializados sin la debida \\ validación, permitiendo a un atacante manipular\\ el comportamiento de la aplicación al \\ aprovechar el sistema de deserialización de PHP.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}PHP Object \\ Injection\\  / Insecure \\ Deserialization\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}PHP Object \\ Injection\\  / Insecure \\ Deserialization\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
