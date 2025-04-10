@@ -1,16 +1,18 @@
-\chapter{Requerimientos}
+\chapter{Diseño del Software}
+
+\section{Requerimientos}
 
 \paragraph{Introducción.}
-Este capítulo tiene como propósito definir los requerimientos funcionales y no funcionales para el desarrollo de una API que permitirá consultar una base de datos de antipatrones de vulnerabilidades. El sistema permitirá a los usuarios realizar consultas sobre una vulnerabilidad específica, ya sea proporcionando un CVE ID, el nombre de un plugin o tema de WordPress, o directamente del core de WordPress. Dado que cada vulnerabilidad tiene un CWE asociado, la API proporcionará información sobre el antipatrón relacionado con ese CWE con el objetivo de educar a los desarrolladores en buenas prácticas de seguridad. Para determinar el CWE, el sistema consultará la API de WP Vulnerability Database sobre la vulnerabilidad en cuestión.
+Esta sección tiene como propósito definir los requerimientos funcionales y no funcionales para el desarrollo de una API que permitirá consultar una base de datos de antipatrones de vulnerabilidades. El sistema permitirá a los usuarios realizar consultas sobre una vulnerabilidad específica, ya sea proporcionando un CVE ID, el nombre de un plugin o tema de WordPress, o directamente del core de WordPress. Dado que cada vulnerabilidad tiene un CWE asociado, la API proporcionará información sobre el antipatrón relacionado con ese CWE con el objetivo de educar a los desarrolladores en buenas prácticas de seguridad. Para determinar el CWE, el sistema consultará la API de WP Vulnerability Database sobre la vulnerabilidad en cuestión.
 
 \paragraph{Alcance.}
 
 El software está diseñado para desarrolladores de WordPress que desean obtener información sobre vulnerabilidades y mejores prácticas de ciberseguridad en las diferentes etapas del SDLC. A través de diferentes endpoints y una interfaz sencilla, el sistema permitirá consultar vulnerabilidades tanto del core de WordPress como de plugins y temas, y proporcionará recomendaciones de seguridad basadas en antipatrones.
 
 
-\section{Requerimientos funcionales}
+\subsection{Requerimientos funcionales}
 
-\subsection{RF1: Consulta de CVE}
+\subsubsection{RF1: Consulta de CVE}
 
 \textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /cve/{cve-id} para obtener detalles sobre un CVE específico. La respuesta incluirá la información de la vulnerabilidad y del antipatrón de vulnerabilidad si está disponible.
 
@@ -39,7 +41,7 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item Se devuelve al usuario la información del CVE, CWE y el antipatrón.
 \end{enumerate}
 
-\subsection{RF2: Consulta de versión del Kernel de Wordpress}
+\subsubsection{RF2: Consulta de versión del Kernel de Wordpress}
 
 \textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /core/{wordpress-version} para obtener detalles sobre una versión de Wordpress en específico. La respuesta incluirá la información de las vulnerabilidades de esa versión y de sus antipatrones relacionados.
 
@@ -67,7 +69,7 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item Se devuelve al usuario la información del CVE, CWE y el antipatrón.
 \end{enumerate}
 
-\subsection{RF3: Consulta de plugin de Wordpress}
+\subsubsection{RF3: Consulta de plugin de Wordpress}
 
 \textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /plugins/{plugin-name}/{plugin-version} para obtener detalles sobre una versión de un plugin en específico. La respuesta incluirá la información de las vulnerabilidades de esa versión y de sus antipatrones relacionados. También podrá no especificarse la versión y obtener respuesta sobre todas las versiones de ese plugin.
 
@@ -105,7 +107,7 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
 \end{enumerate}
 
-\subsection{RF4: Consulta de tema de Wordpress}
+\subsubsection{RF4: Consulta de tema de Wordpress}
 
 \textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /themes/{theme-name}/{theme-version} para obtener detalles sobre una versión de un tema en específico. La respuesta incluirá la información de las vulnerabilidades de esa versión y de sus antipatrones relacionados.  También podrá no especificarse la versión y obtener respuesta sobre todas las versiones de ese tema.
 
@@ -143,16 +145,44 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
 \end{enumerate}
 
-\subsection{RF5: Base de Datos de Antipatrones}
+\subsubsection{RF5: Base de Datos de Antipatrones}
 
 El sistema deberá contar con una base de datos que almacene los CWE y sus correspondientes VAP.
 
-\section{Requerimientos no funcionales}
+\subsection{Requerimientos no funcionales}
 
-\subsection{RNF1: Seguridad}
+\subsubsection{RNF1: Seguridad}
 
 RNF1: El sistema debe implementar medidas de seguridad que protejan las consultas contra ataques de inyección, DDoS y otras amenazas comunes.
 
-\subsection{RNF1: Disponibilidad}
+\subsubsection{RNF1: Disponibilidad}
 
 RNF2: El sistema debe estar disponible 24/7 con un tiempo de inactividad permitido de no más del 1\% al mes.
+
+
+\section{Diseño de la base de datos}
+
+Para el diseño de la base de datos tuve en cuenta que se trataba de un caso en el que había mucho contenido rico en texto y muy variable dependiendo del antipatrón que se trate. Toda la información de un antipatrón es muy específica de una vulnerabilidad, y las recomendaciones que pueden hacerse al desarrollador también lo son.
+
+En cuanto a los patrones de diseño que recomendé para ayudar a prevenir o generar soluciones frente a una vulnerabilidad, pueden repetirse en distintos VAPs. Sin embargo, no es lo mismo aplicar un patrón Proxy para control de acceso que usarlo para filtrar y validar solicitudes entrantes con el fin de evitar ejecución de código remoto. En ambos casos hace de intermediario, pero su aplicación concreta es diferente.
+
+Además, cada CWE está asociado a un único antipatrón, y no hay relaciones entre antipatrones. Como consecuencia de este análisis, decidí que una única tabla de antipatrones era suficiente, ya que cada antipatrón es una entidad bien cerrada.
+
+\subsubsection{Sobre la consulta de la API}
+
+Esta estructura facilita las consultas desde la API, ya que el único dato necesario para recuperar un antipatrón es el cwe\_id. La búsqueda es directa, sin necesidad de joins ni relaciones adicionales, lo cual mejora el rendimiento y simplifica la implementación.
+
+
+\subsubsection{Motor de base de datos}
+
+Se utilizó MySQL como sistema de gestión de base de datos relacional por su facilidad de uso, soporte en múltiples entornos, y su integración con herramientas gráficas como MySQL Workbench. Dado que la base no requiere actualizaciones frecuentes, MySQL resulta suficiente y eficiente para el propósito de esta aplicación.
+
+
+
+\subsubsection{Posible escalabilidad}
+
+En caso de que en un futuro se quisiera extender la base de datos para incluir antipatrones de otros entornos además de WordPress, el diseño no requeriría grandes cambios. Lo único que variaría serían los ejemplos utilizados y las soluciones recomendadas, que en este proyecto están específicamente orientadas a WordPress (por ejemplo, enlaces a Patchstack y código PHP con funciones propias del framework).
+
+Una posible mejora sería agregar un campo a la tabla que especifique a qué software pertenece cada antipatrón. Incluso se podría modularizar esa parte y crear una tabla separada de ejemplos y soluciones específicas por software, vinculada a la tabla principal de antipatrones.
+
+Sin embargo, para el alcance de este proyecto, el enfoque está limitado exclusivamente a WordPress, por lo que se optó por mantener una única tabla con toda la información necesaria.
