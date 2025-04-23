@@ -162,27 +162,16 @@ RNF2: El sistema debe estar disponible 24/7 con un tiempo de inactividad permiti
 
 \section{Diseño de la base de datos}
 
-Para el diseño de la base de datos tuve en cuenta que se trataba de un caso en el que había mucho contenido rico en texto y muy variable dependiendo del antipatrón que se trate. Toda la información de un antipatrón es muy específica de una vulnerabilidad, y las recomendaciones que pueden hacerse al desarrollador también lo son.
+Durante el desarrollo del sistema de consulta de antipatrones de vulnerabilidades (VAPs), surgió la necesidad de almacenar de manera estructurada toda la información extraída del análisis de distintas vulnerabilidades en entornos WordPress. En un principio, opté por utilizar una base de datos relacional en MySQL, siguiendo los lineamientos y herramientas enseñadas durante la carrera. Este modelo, ampliamente conocido, se basa en la organización de los datos en tablas relacionadas mediante claves primarias y foráneas.
 
-En cuanto a los patrones de diseño que recomendé para ayudar a prevenir o generar soluciones frente a una vulnerabilidad, pueden repetirse en distintos VAPs. Sin embargo, no es lo mismo aplicar un patrón Proxy para control de acceso que usarlo para filtrar y validar solicitudes entrantes con el fin de evitar ejecución de código remoto. En ambos casos hace de intermediario, pero su aplicación concreta es diferente.
+Diseñé una primera versión de la base de datos con una única tabla llamada "antipatrones", que contenía campos como el nombre del VAP, su correspondiente CWE, las etapas del SDLC en las que aparece, consecuencias, fuerzas desbalanceadas, soluciones propuestas, patrones relacionados, entre otros. Sin embargo, al intentar volcar los primeros registros, empecé a notar que esta estructura no se ajustaba adecuadamente a la naturaleza de los datos.
 
-Además, cada CWE está asociado a un único antipatrón, y no hay relaciones entre antipatrones. Como consecuencia de este análisis, decidí que una única tabla de antipatrones era suficiente, ya que cada antipatrón es una entidad bien cerrada.
+Muchos campos requerían almacenar múltiples valores, como por ejemplo “aka”, “fuerzas desbalanceadas”, “consecuencias”, “soluciones”, “ejemplos” o “patrones relacionados”. Para representar estos datos correctamente en un modelo relacional, habría sido necesario normalizar la base y distribuirlos en múltiples tablas relacionadas. Esta solución, aunque técnicamente correcta, aumentaba la complejidad del diseño y dificultaba el mantenimiento, especialmente considerando que cada antipatrón es una entidad independiente, sin relaciones reales con otros VAPs.
 
-\subsubsection{Sobre la consulta de la API}
+A partir de este conflicto, comencé a investigar otras opciones de almacenamiento y encontré que las bases de datos no relacionales ofrecían una alternativa mucho más adecuada para este caso. En particular, MongoDB, una base orientada a documentos, me permitió representar cada antipatrón como un documento independiente en formato JSON. Esta estructura no solo era más natural y flexible para los datos que necesitaba almacenar, sino que también facilitaba las consultas y la expansión futura de la base.
 
-Esta estructura facilita las consultas desde la API, ya que el único dato necesario para recuperar un antipatrón es el cwe\_id. La búsqueda es directa, sin necesidad de joins ni relaciones adicionales, lo cual mejora el rendimiento y simplifica la implementación.
+Finalmente, decidí migrar completamente la base de datos a MongoDB. Cada antipatrón fue transformado en un documento que incluye todos sus campos relevantes: nombre, cwe\_id, aka, etapa\_sdlc, fuerzas\_desbalanceadas, problema, consecuencias, solucion\_sdlc, ejemplos, ejemplos\_solucion, patrones\_relacionados, entre otros. La posibilidad de utilizar listas y anidar campos complejos me permitió mantener la estructura de cada VAP tal como estaba organizada en el informe base, sin tener que forzarla a encajar en un modelo tabular.
 
-
-\subsubsection{Motor de base de datos}
-
-Se utilizó MySQL como sistema de gestión de base de datos relacional por su facilidad de uso, soporte en múltiples entornos, y su integración con herramientas gráficas como MySQL Workbench. Dado que la base no requiere actualizaciones frecuentes, MySQL resulta suficiente y eficiente para el propósito de esta aplicación.
+Subí esta base de datos a la nube utilizando MongoDB Atlas, lo cual me permitió disponer de un entorno accesible remotamente para futuras consultas a través de la API que formará parte del sistema desarrollado. Gracias a este enfoque, obtuve una solución más coherente con la estructura de la información, fácil de mantener y escalar, y alineada con las mejores prácticas actuales en el manejo de datos no estructurados.
 
 
-
-\subsubsection{Posible escalabilidad}
-
-En caso de que en un futuro se quisiera extender la base de datos para incluir antipatrones de otros entornos además de WordPress, el diseño no requeriría grandes cambios. Lo único que variaría serían los ejemplos utilizados y las soluciones recomendadas, que en este proyecto están específicamente orientadas a WordPress (por ejemplo, enlaces a Patchstack y código PHP con funciones propias del framework).
-
-Una posible mejora sería agregar un campo a la tabla que especifique a qué software pertenece cada antipatrón. Incluso se podría modularizar esa parte y crear una tabla separada de ejemplos y soluciones específicas por software, vinculada a la tabla principal de antipatrones.
-
-Sin embargo, para el alcance de este proyecto, el enfoque está limitado exclusivamente a WordPress, por lo que se optó por mantener una única tabla con toda la información necesaria.

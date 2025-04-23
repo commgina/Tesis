@@ -303,6 +303,7 @@ OUTPUT requerimientos.aux
 INPUT .\requerimientos.tex
 INPUT .\requerimientos.tex
 INPUT requerimientos.tex
+INPUT C:\Users\Gina\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecrm0800.tfm
 INPUT .\PatronesSoftware\patrones.tex
 INPUT .\PatronesSoftware\patrones.tex
 OUTPUT PatronesSoftware\patrones.aux
@@ -388,7 +389,6 @@ OUTPUT Antripatrones\ssrf.aux
 INPUT .\Antripatrones\ssrf.tex
 INPUT .\Antripatrones\ssrf.tex
 INPUT Antripatrones\ssrf.tex
-INPUT C:\Users\Gina\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecrm0800.tfm
 INPUT .\Antripatrones\pathtraversal.tex
 INPUT .\Antripatrones\pathtraversal.tex
 OUTPUT Antripatrones\pathtraversal.aux
