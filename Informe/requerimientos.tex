@@ -175,3 +175,66 @@ Finalmente, decidí migrar completamente la base de datos a MongoDB. Cada antipa
 Subí esta base de datos a la nube utilizando MongoDB Atlas, lo cual me permitió disponer de un entorno accesible remotamente para futuras consultas a través de la API que formará parte del sistema desarrollado. Gracias a este enfoque, obtuve una solución más coherente con la estructura de la información, fácil de mantener y escalar, y alineada con las mejores prácticas actuales en el manejo de datos no estructurados.
 
 
+\section{Desarrollo de la API}
+
+\subsubsection{Elección del Lenguaje de Programación y Diseño del Proyecto}
+
+Para el desarrollo de la API que consulta vulnerabilidades de WordPress y vincula los CWE con antipatrones, decidí utilizar Python como lenguaje de programación.
+Elegí Python porque:
+\begin{itemize}
+    \item Ofrece una sintaxis simple y clara, ideal para avanzar rápidamente en un proyecto académico.
+    \item Tiene una excelente integración con MongoDB a través de librerías como pymongo, lo que facilitó trabajar con mi base de datos NoSQL.
+    \item Dispone de librerías maduras como requests para realizar solicitudes HTTP y packaging para comparar versiones de software de manera precisa, dos necesidades clave para mi proyecto.
+    \item La comunidad de Python es amplia y activa, lo que significa que hay abundante documentación y recursos disponibles para resolver cualquier duda o problema que pueda surgir durante el desarrollo.
+    \item La versatilidad de Python permite que, si en el futuro decidiera ampliar el proyecto, podría integrar fácilmente otras funcionalidades o servicios sin necesidad de cambiar de lenguaje.
+\end{itemize}
+
+\subsubsection{Estructura del Proyecto}
+
+Planteé una estructura modular para que fuera ordenada y escalable:
+\begin{itemize}
+    \item services/: carpeta donde ubico los módulos lógicos del sistema, como wpquery.py.
+    \item env/: carpeta donde se encuentra el entorno virtual de Python, que contiene todas las dependencias necesarias para el proyecto.
+    \item main.py: archivo de entrada de la API.
+    \item db.py: archivo que contiene la conexión a la base de datos y las funciones para interactuar con ella.
+\end{itemize}
+
+Esta organización me permite mantener el proyecto limpio y facilitar futuras mejoras.
+
+\subsubsection{Desarrollo del módulo wpquery.py}
+
+El archivo wpquery.py es el corazón del servicio de consulta de vulnerabilidades.
+Sus principales responsabilidades son:
+\begin{itemize}
+    \item Realizar solicitudes HTTP a la API de WordPress Vulnerability Database usando la librería requests.
+    \item Procesar las respuestas en formato JSON.
+    \item Detectar para un plugin, tema o versión de core de WordPress, las vulnerabilidades aplicables a una versión específica utilizando la librería packaging para comparar versiones correctamente.
+    \item Filtrar y agrupar los CWE obtenidos de las vulnerabilidades detectadas.
+\end{itemize}
+
+Dado que la API de vulnerabilidades retorna los rangos de versiones afectados mediante operadores de comparación (gt, ge, lt, le), se desarrolló una función que:
+\begin{itemize}
+    \item Recibe como parámetros la versión objetivo y un diccionario con los rangos de versiones afectados.
+    \item Evalúa cada rango de versión utilizando la librería packaging para determinar si la versión objetivo se encuentra dentro del rango especificado.
+    \item Devuelve un booleano indicando si la versión objetivo es vulnerable o no.
+\end{itemize}
+
+Esto me permitió filtrar con precisión cuáles vulnerabilidades afectaban realmente a una versión específica de un plugin, un tema o el core de WordPress.
+
+\subsubsection{Tratamiento de CWE y Mapeo hacia Antipatrones}
+
+Mientras avanzaba en el desarrollo, me di cuenta de que muchas vulnerabilidades traídas por la API estaban asociadas a CWE que yo no había trabajado directamente en mi proyecto de antipatrones por no ser parte del top de vulnerabilidades frecuentes de WordPress.
+
+Para no perder estos casos, investigué la estructura de relaciones entre CWEs y descubrí que podían estar conectados mediante varios tipos de relaciones: ParentOf, CanFollow, CanAlsoBe, PeerOf, entre otras.
+
+Después de analizarlo cuidadosamente, decidí trabajar solamente con relaciones ParentOf, porque:
+\begin{itemize}
+    \item Son relaciones de herencia directa entre vulnerabilidades, lo que asegura que tienen un vínculo fuerte y aplicable.
+    \item Las otras relaciones (como CanFollow o CanAlsoBe) son condicionales o contextuales, y podrían traer confusión o falsos positivos si las tomaba en cuenta.
+\end{itemize}
+
+
+Finalmente, definí que solo consideraré vulnerabilidades que estén directamente asociadas a los CWE principales o bien, que tengan como padre uno de estos CWE. De esta manera, garantizo que los antipatrones ofrecidos como solución estén directamente relacionados al tipo de vulnerabilidad detectada, manteniendo la coherencia y calidad de las respuestas de la API.
+
+
+

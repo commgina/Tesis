@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.4.3)  22 APR 2025 20:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.4.3)  29 APR 2025 12:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -368,7 +368,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 LaTeX Warning: Citation `IONOS_CMS' on page 1 undefined on input line 4.
 
-<Imagenes/wpcms.png, id=1176, 978.65625pt x 534.99875pt>
+<Imagenes/wpcms.png, id=1180, 978.65625pt x 534.99875pt>
 File: Imagenes/wpcms.png Graphic file (type png)
 <use Imagenes/wpcms.png>
 Package pdftex.def Info: Imagenes/wpcms.png  used on input line 8.
@@ -462,17 +462,17 @@ Cap\'{\i }tulo 3.
 
 
 
-] [14] [15] [16]) [17]
+] [14] [15] [16] [17]) [18]
 \openout2 = `PatronesSoftware/patrones.aux'.
 
  (PatronesSoftware/patrones.tex
 Ap\'{e}ndice A.
-<PatronesSoftware/proxypattern.png, id=1310, 788.9475pt x 534.99875pt>
+<PatronesSoftware/proxypattern.png, id=1322, 788.9475pt x 534.99875pt>
 File: PatronesSoftware/proxypattern.png Graphic file (type png)
 <use PatronesSoftware/proxypattern.png>
 Package pdftex.def Info: PatronesSoftware/proxypattern.png  used on input line 11.
 (pdftex.def)             Requested size: 220.50887pt x 149.52924pt.
-[18
+[19
 
 
 
@@ -483,17 +483,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.1
                                                   \__shipout_drop_firstpage_...
 l.24 
       <./PatronesSoftware/proxypattern.png>]
-<PatronesSoftware/facade.png, id=1318, 491.8375pt x 190.7125pt>
+<PatronesSoftware/facade.png, id=1331, 491.8375pt x 190.7125pt>
 File: PatronesSoftware/facade.png Graphic file (type png)
 <use PatronesSoftware/facade.png>
 Package pdftex.def Info: PatronesSoftware/facade.png  used on input line 27.
 (pdftex.def)             Requested size: 220.50887pt x 85.50262pt.
-<PatronesSoftware/adapter.png, id=1319, 534.99875pt x 301.125pt>
+<PatronesSoftware/adapter.png, id=1332, 534.99875pt x 301.125pt>
 File: PatronesSoftware/adapter.png Graphic file (type png)
 <use PatronesSoftware/adapter.png>
 Package pdftex.def Info: PatronesSoftware/adapter.png  used on input line 44.
 (pdftex.def)             Requested size: 220.50887pt x 124.1145pt.
- [19
+ [20
 pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -504,7 +504,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.3
                                                   \__shipout_drop_firstpage_...
 l.50 
       <./PatronesSoftware/facade.png> <./PatronesSoftware/adapter.png>]
-<PatronesSoftware/singleton.png, id=1329, 642.4pt x 401.5pt>
+<PatronesSoftware/singleton.png, id=1341, 642.4pt x 401.5pt>
 File: PatronesSoftware/singleton.png Graphic file (type png)
 <use PatronesSoftware/singleton.png>
 Package pdftex.def Info: PatronesSoftware/singleton.png  used on input line 57.
@@ -514,18 +514,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
 
-[20
+[21
 pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.75 
       <./PatronesSoftware/singleton.png>]
-<PatronesSoftware/observer.png, id=1336, 471.7625pt x 180.675pt>
+<PatronesSoftware/observer.png, id=1348, 471.7625pt x 180.675pt>
 File: PatronesSoftware/observer.png Graphic file (type png)
 <use PatronesSoftware/observer.png>
 Package pdftex.def Info: PatronesSoftware/observer.png  used on input line 78.
 (pdftex.def)             Requested size: 220.50887pt x 84.45134pt.
-<PatronesSoftware/decorator.png, id=1337, 642.4pt x 401.5pt>
+<PatronesSoftware/decorator.png, id=1349, 642.4pt x 401.5pt>
 File: PatronesSoftware/decorator.png Graphic file (type png)
 <use PatronesSoftware/decorator.png>
 Package pdftex.def Info: PatronesSoftware/decorator.png  used on input line 95.
@@ -533,18 +533,18 @@ Package pdftex.def Info: PatronesSoftware/decorator.png  used on input line 95.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [21
+ [22
 pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.99 A
       nalogÃ­a: Imagina que tienes un objeto que representa un \textbf{mensa... <./PatronesSoftware/observer.png>]
-<PatronesSoftware/strategy.png, id=1344, 572.1375pt x 281.05pt>
+<PatronesSoftware/strategy.png, id=1356, 572.1375pt x 281.05pt>
 File: PatronesSoftware/strategy.png Graphic file (type png)
 <use PatronesSoftware/strategy.png>
 Package pdftex.def Info: PatronesSoftware/strategy.png  used on input line 111.
 (pdftex.def)             Requested size: 220.50887pt x 108.31822pt.
- [22
+ [23
 pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -554,7 +554,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.Alph1.7
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.123 
-       <./PatronesSoftware/decorator.png> <./PatronesSoftware/strategy.png>]) [23]
+       <./PatronesSoftware/decorator.png> <./PatronesSoftware/strategy.png>]) [24]
 \openout2 = `Antripatrones/sqlInjection.aux'.
 
  (Antripatrones/sqlInjection.tex
@@ -564,57 +564,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
-[24
+[25
 
 
 
 
-] [25]) [26] [27]
+] [26]) [27] [28]
 \openout2 = `Antripatrones/css.aux'.
 
  (Antripatrones/css.tex
 Ap\'{e}ndice C.
-[28
+[29
 
 
 
 
-] [29]) [30]
+] [30]) [31]
 \openout2 = `Antripatrones/bac.aux'.
 
  (Antripatrones/bac.tex
 Ap\'{e}ndice D.
-[31
+[32
 
 
 
 
-] [32] [33]) [34]
+] [33] [34]) [35]
 \openout2 = `Antripatrones/csrf.aux'.
 
  (Antripatrones/csrf.tex
 Ap\'{e}ndice E.
-[35
+[36
 
 
 
 
-] [36]) [37]
+] [37]) [38]
 \openout2 = `Antripatrones/ssrf.aux'.
 
  (Antripatrones/ssrf.tex
 Ap\'{e}ndice F.
-[38
+[39
 
 
 
 
-] [39]) [40]
+] [40]) [41]
 \openout2 = `Antripatrones/pathtraversal.aux'.
 
  (Antripatrones/pathtraversal.tex
 Ap\'{e}ndice G.
-[41
+[42
 
 
 
@@ -624,17 +624,17 @@ Overfull \hbox (30.80804pt too wide) in paragraph at lines 41--42
 []\T1/cmr/m/n/10.95 El tra-ver-sal de ru-ta tam-bién abar-ca el uso de nom-bres de ru-ta ab-so-lu-tos co-mo []usr/local/bin"para
  []
 
-[42]
+[43]
 Overfull \hbox (4.43117pt too wide) in paragraph at lines 92--93
 []\T1/cmr/m/n/10.95 Funcionalidades de Word-Press: uti-li-zar fun-cio-nes pa-ra sa-ni-ti-zar la en-tra-da co-mo esc_url()
  []
 
-) [43]
+) [44]
 \openout2 = `Antripatrones/rfilfi.aux'.
 
  (Antripatrones/rfilfi.tex
 Ap\'{e}ndice H.
-[44
+[45
 
 
 
@@ -654,12 +654,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--74
 
  []
 
-[45]) [46]
+[46]) [47]
 \openout2 = `Antripatrones/rce.aux'.
 
  (Antripatrones/rce.tex
 Ap\'{e}ndice I.
-[47
+[48
 
 
 
@@ -669,87 +669,87 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
-[48]) [49]
+[49]) [50]
 \openout2 = `Antripatrones/cvsInjection.aux'.
 
  (Antripatrones/cvsInjection.tex
 Ap\'{e}ndice J.
-[50
+[51
 
 
 
 
-]) [51]
+]) [52]
 \openout2 = `Antripatrones/dataexposure.aux'.
 
  (Antripatrones/dataexposure.tex
 Ap\'{e}ndice K.
-[52
+[53
 
 
 
 
-] [53]) [54]
+] [54]) [55]
 \openout2 = `Antripatrones/IDOR.aux'.
 
  (Antripatrones/IDOR.tex
 Ap\'{e}ndice L.
-[55
+[56
 
 
 
 
-] [56]) [57]
+] [57]) [58]
 \openout2 = `Antripatrones/privilegeescalation.aux'.
 
  (Antripatrones/privilegeescalation.tex
 Ap\'{e}ndice M.
-[58
+[59
 
 
 
 
-] [59]) [60]
+] [60]) [61]
 \openout2 = `Antripatrones/RaceCondition.aux'.
 
  (Antripatrones/RaceCondition.tex
 Ap\'{e}ndice N.
-[61
+[62
 
 
 
 
-]) [62]
+]) [63]
 \openout2 = `Antripatrones/afu.aux'.
 
  (Antripatrones/afu.tex
 Ap\'{e}ndice \~N.
-[63
+[64
 
 
 
 
-] [64]) [65]
+] [65]) [66]
 \openout2 = `Antripatrones/afd.aux'.
 
  (Antripatrones/afd.tex
 Ap\'{e}ndice O.
-[66
+[67
 
 
 
 
-]) [67]
+]) [68]
 \openout2 = `Antripatrones/afdeletion.aux'.
 
  (Antripatrones/afdeletion.tex
 Ap\'{e}ndice P.
-[68
+[69
 
 
 
 
-]) [69]
+]) [70]
 \openout2 = `Antripatrones/dos.aux'.
 
  (Antripatrones/dos.tex)
@@ -760,7 +760,7 @@ Ap\'{e}ndice P.
 
  (Antripatrones/phpobjectinjection.tex
 Ap\'{e}ndice Q.
-[70
+[71
 
 
 
@@ -771,7 +771,7 @@ Ap\'{e}ndice Q.
 
 
 
-]) [71] (main.aux (introduccion.aux)
+]) [72] (main.aux (introduccion.aux)
 LaTeX Info: Redefining \. on input line 13.
 LaTeX Info: Redefining \% on input line 13.
  (propuesta.aux) (vap.aux) (plantilla.aux) (vulnwp.aux) (pre-requerimientos.aux) (requerimientos.aux) (PatronesSoftware/patrones.aux) (Antripatrones/sqlInjection.aux) (Antripatrones/css.aux) (Antripatrones/bac.aux) (Antripatrones/csrf.aux) (Antripatrones/ssrf.aux) (Antripatrones/pathtraversal.aux) (Antripatrones/rfilfi.aux) (Antripatrones/rce.aux) (Antripatrones/cvsInjection.aux) (Antripatrones/dataexposure.aux) (Antripatrones/IDOR.aux) (Antripatrones/privilegeescalation.aux) (Antripatrones/RaceCondition.aux) (Antripatrones/afu.aux) (Antripatrones/afd.aux) (Antripatrones/afdeletion.aux) (Antripatrones/dos.aux) (Antripatrones/typejuggling.aux) (Antripatrones/phpobjectinjection.aux))
@@ -784,20 +784,20 @@ L3 programming layer <2024-01-04>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: DDACC612D8CA4D7CEBD6D5D5FEC6BF3E;47860.
+(rerunfilecheck)             Checksum: 59B522629AAD6881B4CF04E9F2D68D92;48025.
  ) 
 Here is how much of TeX's memory you used:
- 13494 strings out of 474485
- 230830 string characters out of 5744207
+ 13501 strings out of 474485
+ 230929 string characters out of 5744207
  1944542 words of memory out of 5000000
- 34991 multiletter control sequences out of 15000+600000
+ 34992 multiletter control sequences out of 15000+600000
  570333 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,14n,79p,1276b,543s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\Gina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk>
-Output written on main.pdf (71 pages, 962926 bytes).
+Output written on main.pdf (72 pages, 968181 bytes).
 PDF statistics:
- 2165 PDF objects out of 2487 (max. 8388607)
- 440 named destinations out of 1000 (max. 500000)
- 2385 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2178 PDF objects out of 2487 (max. 8388607)
+ 446 named destinations out of 1000 (max. 500000)
+ 2393 words of extra memory for PDF output out of 10000 (max. 10000000)
 
