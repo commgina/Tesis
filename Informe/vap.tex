@@ -1,23 +1,15 @@
 
 \chapter{Antipatrón de Vulnerabilidades}    
 
-Antes de saltar directamente al tema Wordpress, es de suma importancia dejar bien claro los conceptos de patrón, antipatrón y vulnerabilidad ya que son el pilar para entender el porque de la necesidad de relacionarlos en una plantilla y posteriormente, en una base de datos de VAP.
-
-\section{Definiciones}
-
-\textbf{Patrón:}
-
-\textbf{Antipatrón:} Es una mala práctica de software.  describe una solución común a un problema frecuente, pero que genera consecuencias negativas. Deja al descubierto como algunas prácticas comunes en el desarrollo de software parecen apropiadas pero en realidad introducen más vulnerabilidades. 
-
-\textbf{Vulnerabilidad:} una debilidad común y recurrente que ocurre debido a errores en el desarrollo, poco control de calidad en las etapas del SDLC o poca preocupación por cuestiones de seguridad. Esto sumado a la práctica de compartir información y conocimiento  que tiene la comunidad de ciberseguridad, les permite a los hackers aprovecharse de estas vulnerabilidades.
+Antes de saltar directamente al tema Wordpress, es de suma importancia revisar los conceptos de \gls{patrón}, \gls{antipatrón} y \gls{vulnerabilidad} presentes en el glosario para asi poder entender el porque de la necesidad de relacionarlos en una plantilla y posteriormente, en una base de datos de \ACRshort{vap}.
 
 \vspace{0.3cm}
-Un anti-patrón es algo que generalmente se considera negativo en el contexto del desarrollo de software. Se refiere a una \textit{práctica, diseño o solución a un problema que, aunque pueda parecer válido o común, en realidad lleva a resultados negativos}, como código difícil de mantener, bajo rendimiento o vulnerabilidades de seguridad.
+Un \gls{antipatrón} es algo que generalmente se considera negativo en el contexto del desarrollo de software. Se refiere a una \textit{práctica, diseño o solución a un problema que, aunque pueda parecer válido o común, en realidad lleva a resultados negativos}, como código difícil de mantener, bajo rendimiento o vulnerabilidades de seguridad.
 Entonces, en términos generales, un anti-patrón es algo que se debe evitar en el desarrollo de software. Reconocer y comprender los anti-patrones puede ayudar a los desarrolladores a mejorar la calidad, la eficiencia y la seguridad del software que producen, ya que les permite evitar soluciones que pueden llevar a problemas conocidos o introducir nuevas vulnerabilidades.
 
 \section{Perspectiva de los antipatrones para desarrolladores de Software}
 
-Las vulnerabilidades de software son debilidades en la arquitectura, el diseño o el código de un sistema que pueden causar violaciones de la política de seguridad del sistema. Su existencia es la causa principal de los ataques a los sistemas de software. Aunque la ciberseguridad es un atributo de calidad fundamental, a menudo se considera como algo secundario en el desarrollo de software
+Las \gls{vulnerabilidad}es de software son debilidades en la arquitectura, el diseño o el código de un sistema que pueden causar violaciones de la política de seguridad del sistema. Su existencia es la causa principal de los ataques a los sistemas de software. Aunque la ciberseguridad es un atributo de calidad fundamental, a menudo se considera como algo secundario en el desarrollo de software
 Al tener otras preocupaciones, los desarrolladores piensan que la responsabilidad de la seguridad es de alguien más como los pentesters o hackers éticos. Los APV proporcionan una solución a esto en tres pasos:
 
 \begin{enumerate}

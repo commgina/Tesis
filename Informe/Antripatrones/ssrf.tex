@@ -1,42 +1,42 @@
-\chapter{Apéndice D: Server Side Request Forgery}
+\chapter{Server Side Request Forgery}
 \section{Antipatrón}
-\subsection{Nombre}
+\subsection*{Nombre}
 Server Side Request Forgery
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 SSRF
 Cross Site Port Attack
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Diseño
 Implementación
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-918
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2024-43989
     \item CVE-2024-5021
 \end{itemize}
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/server-side-request-forgery/}{Patchstack}
     \item \href{https://cwe.mitre.org/data/definitions/918.html}{CWE}
 \end{itemize}
 
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 
 \begin{itemize}
     \item La aplicación permite a los usuarios interactuar con recursos externos, como la descarga de archivos o la obtención de información. Esta flexibilidad genera una vulnerabilidad cuando se implementa sin restricciones de validación en las URLs externas que los usuarios pueden enviar.
     \item La implementación que permite que los usuarios envíen solicitudes sin validación hace que el servidor actúe como una "ventana" hacia su propia red interna. Un atacante puede aprovechar esto para acceder a recursos internos que normalmente no están disponibles desde el exterior, como por ejemplo una base de datos. 
 \end{itemize}
 
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 CAPEC-664
-\subsection{Problema}
+\subsection*{Problema}
 
 El servidor web recibe una URL o una solicitud similar de un componente aguas arriba y recupera el contenido de esa URL, pero no garantiza suficientemente que la solicitud se esté enviando al destino esperado.
 Al proporcionar URLs a hosts o puertos inesperados, los atacantes pueden hacer que parezca que el servidor está enviando la solicitud, lo que posiblemente permite eludir controles de acceso, como cortafuegos que impiden que los atacantes accedan directamente a las URLs. El servidor puede ser utilizado como un proxy para realizar escaneos de puertos en hosts de redes internas, usar otras URLs que puedan acceder a documentos en el sistema (usando file://), o utilizar otros protocolos como gopher:// o tftp://, los cuales pueden ofrecer un mayor control sobre el contenido de las solicitudes.
 
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 
 Confidencialidad: lectura de datos sensibles de la aplicación
 
@@ -59,13 +59,13 @@ Implementación
     \item Usar las funciones de seguridad que ofrece tu proveedor de la nube para mitigar vulnerabilidades comunes. Por ejemplo, AWS Cloud ofrece el método de Instance Metadata Service Version 2 (IMDSv2) que protege contra ataques SSRF y bloquea el acceso no autorizado a metadatos.
     
 \end{itemize}
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/securing-code/server-side-request-forgery/}{PatchStack}
 \end{itemize}
 
-\subsection{Related patterns}
+\subsection*{Related patterns}
 
 \textbf{Proxy Pattern} 
 

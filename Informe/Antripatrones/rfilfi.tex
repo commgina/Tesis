@@ -1,25 +1,25 @@
-\chapter{Apéndice G: Remote/Local File Inclusion}
+\chapter{Remote/Local File Inclusion}
 
 Estas dos vulnerabilidades se detallan juntas ya que la única diferencia entre ellas es el origen desde el cual el atacante incluye un archivo en el servidor. Puede ser archivos locales o un archivo remoto del servidor del atacante. 
 
 \section{Antipatrón}
-\subsection{Nombre}
+\subsection*{Nombre}
 Remote/Local File Inclusion
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 \begin{itemize}
     \item Remote file include
     \item RFI
     \item Local file inclusion
 \end{itemize}
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Implementación
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-98
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 CVE-2024-34551 
 CVE-2024-49286 
 CVE-2024-44014 
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 
 \begin{itemize}
     \item https://cwe.mitre.org/data/definitions/98.html
@@ -27,26 +27,26 @@ CVE-2024-44014
 \end{itemize}
 
 
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 
 \begin{itemize}
     \item El sistema permite la inclusión de archivos mediante rutas proporcionadas por el usuario pero estas no se validan correctamente permitiendo al atacante incluir archivos locales (LFI) o remotos (RFI).
     \item El sistema permite la inclusión de archivos especificados por el usuario pero estas no se validan correctamente, permitiendo a un atacante ejecutar un archivo local sensible.
 \end{itemize}
 
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 
 CAPEC-193
 CAPEC-252
 
-\subsection{Problema}
+\subsection*{Problema}
 La aplicación PHP permite que el atacante controle qué archivo será incluido o requerido mediante funciones como require, include, include\_once, o require\_once. El problema clave es que la aplicación no valida ni restringe correctamente la entrada del usuario, lo que puede permitir la ejecución de código malicioso o la exposición de información sensible.
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 \textbf{Integridad, confidencialidad y disponibilidad:} El atacante puede especificar código arbitrario que será ejecutado desde una ubicación remota. Alternativamente, puede ser posible aprovechar el comportamiento normal del programa para insertar código PHP en archivos en la máquina local, los cuales luego pueden ser incluidos, forzando así la ejecución del código, ya que PHP ignora todo en el archivo excepto el contenido entre los delimitadores de PHP.
 
 \section{Patrón}
 
-\subsection{Solución en el SDLC}
+\subsection*{Solución en el SDLC}
 
 Implementación:
 
@@ -57,25 +57,19 @@ Implementación:
     \item Usar configuraciones de PHP para limitar la superficie de ataque. Desactivar la opcion allow\_url\_fopen que limita la habilidad de incluir archivos en ubicaciones remotas.
 \end{itemize}
 
-\subsection{Solución}
+\subsection*{Solución}
 
 \begin{itemize}
-    \item https://owasp.org/www-project-web-security-testing-guide/stable/4-Web
-    \_Application\_Security\_Testing/07-Input\_Validation\_Testing/11.2-Testing\_for\_Remote\_File\_Inclusion
-    \item https://owasp.org/www-project-web-security-testing-guide/v42/4-Web
-    \_Application\_Security\_Testing/07-Input\_Validation\_Testing/11.1-Testing\_for\_Local\_File\_Inclusion
-    \item https://patchstack.com/academy/wordpress/securing-code/local-file-inclusion/
+    \item \href{https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion}{OWASP Web Security Testing Guide}
+    \item \href{https://patchstack.com/academy/wordpress/securing-code/local-file-inclusion/}{PatchStack - Local File Inclusion}
 \end{itemize}
 
-\subsection{Patrones relacionados}
+\subsection*{Patrones relacionados}
 
 \begin{itemize}
-    \item \textbf{Adapter Pattern:} Si una aplicación necesita interactuar con bases de datos o archivos locales,  un adaptador puede actuar como una capa de seguridad para asegurar que las consultas estén parametrizadas y que los inputs se saniticen antes de procesarlos. Por ejemplo, podriamos utilizar un adaptador para implementar referencias indirectas a archivos del servidor. \\
-  
+    \item \textbf{Adapter Pattern:} Si una aplicación necesita interactuar con bases de datos o archivos locales,  un adaptador puede actuar como una capa de seguridad para asegurar que las consultas estén parametrizadas y que los inputs se saniticen antes de procesarlos. Por ejemplo, podriamos utilizar un adaptador para implementar referencias indirectas a archivos del servidor.
     \item Utilizar versiones recientes de PHP (preferiblemente PHP 6 o posterior, aunque hoy en día ya estamos en versiones PHP 7.x y 8.x). Las versiones más recientes de PHP incluyen mejoras significativas de seguridad que no estaban presentes en las versiones anteriores (especialmente las versiones de PHP 4.x o 5.x). Muchas vulnerabilidades y prácticas inseguras que existían en versiones antiguas han sido corregidas o eliminadas en versiones modernas
-    
     \item Utilizar un WAF como medida temporal mientras se desarrollan parches o actualizaciones para corregir las vulnerabilidades en el código.
-
     \item Almacena las bibliotecas, archivos de inclusión y archivos de utilidad fuera del directorio raíz de documentos web, si es posible y utilizar las configuraciones del servidor web para restringir el acceso directo a estos archivos.
 \end{itemize}
 

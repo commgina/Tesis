@@ -1,46 +1,51 @@
-\chapter{Apéndice E: Path Traversal}
+\chapter{Path Traversal}
 
 \section{Antipatrón}
 
-\subsection{\textbf{Nombre del Antipatrón:} Path Traversal}
+\subsection*{Nombre}
+Path Traversal
 
-\subsection{\textbf{También conocido como:} Directory Traversal, File Path Traversal}
+\subsection*{También conocido como}
+\begin{itemize}
+    \item Directory Traversal
+    \item Path Traversal Attack
+\end{itemize}
 
-\subsection{\textbf{Etapa del SDLC donde se expone:}}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 
 Diseño, Implementación.
 
-\subsection{\textbf{Mapping con CWE}}
+\subsection*{Mapping con CWE}
 CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')
 
-\subsection{\textbf{Ejemplos de CVE}}
+\subsection*{Ejemplos de CVE}
 CVE-2024-0221
 CVE-2024-9047
 
-\subsection{\textbf{Ejemplo del Antipatrón:} }
+\subsection*{Ejemplo del Antipatrón}
 
 \begin{itemize}
-    \item https://cwe.mitre.org/data/definitions/22.html
-    \item https://owasp.org/www-community/attacks/Path\_Traversal
+    \item \href{https://cwe.mitre.org/data/definitions/22.html}{CWE}
+    \item \href{https://owasp.org/www-community/attacks/Path_Traversal}{OWASP}
 \end{itemize}
 
-\subsection{\textbf{Fuerzas desbalanceadas:}}
+\subsection*{Fuerzas desbalanceadas}
 
 1. Entrada del usuario no restringida: La necesidad de ofrecer al usuario la opción de cargar archivos o acceder a recursos externos puede derivar en la manipulación de rutas si no se realiza una validación adecuada.
 2. Acceso directo a archivos del servidor: El sistema permite acceder a archivos del servidor en función de entradas proporcionadas por el usuario, lo que puede llevar a la exposición de archivos sensibles si no se controla adecuadamente la ruta solicitada.
 
-\subsection{\textbf{Attack Pattern}}
+\subsection*{Attack Pattern}
 CAPEC-126: Path Traversal
 
-\subsection{\textbf{Problema}}
+\subsection*{Problema}
 
 El producto utiliza una entrada externa para construir una ruta que tiene la intención de identificar un archivo o directorio ubicado debajo de un directorio padre restringido, pero el producto no neutraliza adecuadamente los elementos especiales dentro de la ruta que pueden hacer que la ruta se resuelva en una ubicación fuera del directorio restringido.
 
 Muchas operaciones de archivos están destinadas a realizarse dentro de un directorio restringido. Al usar elementos especiales como ".." y los separadores de "/", los atacantes pueden escapar de la ubicación restringida para acceder a archivos o directorios que se encuentran en otra parte del sistema. Uno de los elementos especiales más comunes es la secuencia "../", que en la mayoría de los sistemas operativos modernos se interpreta como el directorio padre de la ubicación actual. Esto se conoce como traversal relativo de ruta.
 
-El traversal de ruta también abarca el uso de nombres de ruta absolutos como "/usr/local/bin" para acceder a archivos inesperados. Esto se conoce como traversal absoluto de ruta. 
+El traversal de ruta también abarca el uso de nombres de ruta absolutos como \href{usr/local/bin} para acceder a archivos inesperados. Esto se conoce como traversal absoluto de ruta. 
 
-\subsection{\textbf{Consecuencia}}
+\subsection*{\textbf{Consecuencia}}
 
 1. Integridad: El atacante podría ser capaz de sobrescribir o crear archivos críticos, como programas, bibliotecas o datos importantes. Si el archivo objetivo es utilizado por un mecanismo de seguridad, el atacante podría eludir ese mecanismo. Por ejemplo, agregar una nueva cuenta al final de un archivo de contraseñas podría permitir a un atacante eludir la autenticación.
 
@@ -51,7 +56,7 @@ El traversal de ruta también abarca el uso de nombres de ruta absolutos como "/
 
 \section{Patrón}
 
-\subsection{Pasos de la solución en el SDLC}
+\subsection*{Pasos de la solución en el SDLC}
 
 \textbf{Diseño:}
 
@@ -75,7 +80,7 @@ El traversal de ruta también abarca el uso de nombres de ruta absolutos como "/
     \item Validar la entrada del usuario solo aceptando datos conocidos como válidos. Asegurarse de que todo el contenido entregado al cliente esté sanitizado de acuerdo a una especificación de contenido aceptable, utilizando un enfoque de lista blanca.
 \end{itemize}
 
-\subsection{\textbf{Solución}}
+\subsection*{\textbf{Solución}}
 
 \href{https://www.wpservices.com/stay-secure-protecting-your-wordpress-site-from-directory-traversal-vulnerabilities/}{WPServicses}
 
@@ -89,6 +94,6 @@ El traversal de ruta también abarca el uso de nombres de ruta absolutos como "/
 
 \begin{itemize}
     \item Facade Pattern: puede proporcionar una interfaz simplificada y controlada para el acceso a recursos del sistema de archivos, permitiendo que las rutas de archivo sean verificadas y sanitizadas antes de que se realicen las operaciones de lectura o escritura. 
-    \item Funcionalidades de WordPress: utilizar funciones para sanitizar la entrada como esc\_url() y esc\_url\_raw().
+    \item Funcionalidades de WordPress: utilizar funciones para sanitizar la entrada como \path{esc\_url()} y \path{esc\_url\_raw()}.
     \item Deshabilitar indexado de directorios: modificando las reglas de .htaccess se puede prevenir que los atacantes enumeren el contenido de los directorios  e identifiquen posibles puntos de ataque.
 \end{itemize}

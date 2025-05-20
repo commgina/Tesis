@@ -1,43 +1,43 @@
 \chapter{PHP Object Injection}
 \section{Antipatrón}
-\subsection{Nombre}
+\subsection*{Nombre}
 PHP Object Injection
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 \begin{itemize}
     \item Marshaling, Unmarshaling
     \item Pickling, Unpickling (Python)
 \end{itemize}
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 \begin{itemize}
     \item Arquitectura
     \item Implementación
 \end{itemize}
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-502: Deserialization of Untrusted Data
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2024-13410
     \item CVE-2025-0767
     \item CVE-2025-22526
 \end{itemize}
 
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/php-object-injection/}{PHP Object Injection}
     \item \href{https://cwe.mitre.org/data/definitions/502.html}{CWE}
     \item \href{https://learn.snyk.io/lesson/object-injection/?ecosystem=php}{Snyk}
 \end{itemize}
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 La inyección de objetos ocurre cuando los datos serializados provienen de la entrada del usuario y luego se deserializan de una manera que provoca un comportamiento inesperado o no deseado en la aplicación. En el peor de los casos, la inyección de objetos puede resultar en la ejecución remota de código en el servidor que realiza la deserialización.
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 CAPEC-586
-\subsection{Problema}
+\subsection*{Problema}
 El producto deserializa datos no confiables sin garantizar la validez de los mismos.
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 Integridad: los atacantes pueden llegar a morificar datos u objetos que se creia que estaban seguros de ser modificados
 \section{Patrón}
 
-\subsection{Solución en el SDLC}
+\subsection*{Solución en el SDLC}
 
 \textbf{Arquitectura}
 \begin{itemize}
@@ -54,10 +54,10 @@ Integridad: los atacantes pueden llegar a morificar datos u objetos que se creia
 \item Evitar el uso de tipos innecesarios o cadenas de objetos que puedan ejecutarse durante la deserialización, ya que constantemente se descubren nuevas técnicas de explotación.
 \end{itemize}
 
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 \href{https://patchstack.com/academy/wordpress/securing-code/php-object-injection/}{Patchstack}
 
-\subsection{Related patterns}
+\subsection*{Related patterns}
 \begin{itemize}
     \item Proxy Pattern: Filtra y valida los objetos antes de ser instanciados, evitando que datos no confiables lleguen al objeto real. Útil para restringir qué clases pueden ser deserializadas.
     \item Factory Pattern: Centraliza la creación de objetos, permitiendo validar los tipos antes de instanciarlos. En lugar de unserializar objetos directamente, se puede verificar la clase y sus propiedades antes de crear instancias.

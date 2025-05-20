@@ -1,27 +1,27 @@
 \chapter{Privilege Escalation}
 \section{Antipatrón}
-\subsection{Nombre}
+\subsection*{Nombre}
 Privilege Escalation
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 Improper Privilege Management
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Arquitectura
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-269
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2020-28035
     \item CVE-2024-52442
     \item CVE-2022-1654
 \end{itemize}
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 
 \begin{itemize}
     \item \href{https://cwe.mitre.org/data/definitions/269.html}{CWE}
     \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/privilege-escalation/}{Patchstack}
 \end{itemize}
 
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 
 \begin{itemize}
     \item El requerimiento de almacenar roles o permisos en cookies sin validación en el servidor permite a un atacante modificar las cookies para acceder a funcionalidades restringidas.
@@ -30,15 +30,15 @@ CWE-269
     \item Implementar una API sin restringir el acceso a endpoints a usuarios que no deberían tener autorización para accederlos.
 \end{itemize}
 
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 \begin{itemize}
     \item CAPEC-122
     \item CAPEC-233
     \item CAPEC-58
 \end{itemize}
-\subsection{Problema}
+\subsection*{Problema}
 El producto no asigna, modifica, rastrea o verifica correctamente los privilegios de un actor, lo que crea un ámbito de control no intencionado para ese actor.
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 Control de acceso
 \begin{itemize}
     \item Obtener privilegios escalando verticalmente
@@ -48,16 +48,16 @@ Control de acceso
 \end{itemize}
 
 \section{Patrón}
-\subsection{Solución en el SDLC}
+\subsection*{Solución en el SDLC}
 Arquitectura
 \begin{itemize}
     \item Gestionar correctamente la configuración, administración y manejo de los privilegios.
     \item Administra explícitamente las zonas de confianza dentro del software.
     \item Seguir el principio de privilegio mínimo al asignar derechos de acceso a las entidades del sistema.
 \end{itemize}
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 \href{https://patchstack.com/academy/wordpress/securing-code/privilege-escalation/}{Patchstack}
-\subsection{Related patterns}
+\subsection*{Related patterns}
 
 \begin{itemize}
     \item Proxy: Utiliza un objeto proxy como intermediario entre el usuario y el recurso solicitado.

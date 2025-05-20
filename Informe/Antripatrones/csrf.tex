@@ -1,38 +1,38 @@
 \chapter{Cross-Site Request Forgery}
 \section{Antipatrón}
-\subsection{Nombre} 
+\subsection*{Nombre} 
 Cross-Site Request Forgery
 
-\subsection{También conocido como} 
+\subsection*{También conocido como} 
 Sea Surf, Session Riding, XSRF
 
-\subsection{Frecuentemente expuesto en la etapa del SDLC} 
+\subsection*{Frecuentemente expuesto en la etapa del SDLC} 
 Requerimientos, Implementación
 
-\subsection{Mapeo con CWE} \textbf{CWE-352 (Composite)}. Al ser un composite, CSRF es la combinación de varias vulnerabilidades explotadas. Estas son: 
+\subsection*{Mapeo con CWE} \textbf{CWE-352 (Composite)}. Al ser un composite, CSRF es la combinación de varias vulnerabilidades explotadas. Estas son: 
 \begin{itemize}
     \item \textbf{CWE-346: Origin Validation Error} – Fallas en la validación del origen de las solicitudes (por ejemplo, falta de verificación de los encabezados de origen o referer), lo que facilita ataques de CSRF.
     \item \textbf{CWE-441: Unintended Proxy or Intermediary (Confused Deputy)} – Describe escenarios en los que un servidor o aplicación actúa como un proxy involuntario para un atacante, lo que puede ocurrir en situaciones de CSRF.
     \item \textbf{CWE-642: External Control of Critical State Data} – En el contexto de CSRF, se refiere a la manipulación o control externo de datos críticos de estado, como tokens de autenticación o cookies de sesión.
     \item \textbf{CWE-613: Insufficient Session Expiration} – Se refiere a la incapacidad para terminar una sesión correctamente, lo que permite a un atacante reutilizar sesiones o explotar vulnerabilidades como CSRF durante una sesión activa.
 \end{itemize}
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2024-44028
     \item CVE-2024-43301
     \item CVE-2023-27634
 \end{itemize}
 
-\subsection{Ejemplo de antipatrón} 
+\subsection*{Ejemplo de antipatrón} 
 
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/cross-site-request-forgery/}{Patchstack}
     \item \href{https://cwe.mitre.org/data/definitions/352.html}{CWE}
 \end{itemize}
 
-\subsection{Fuerzas desbalanceadas} \begin{itemize} \item Uso de cookies para autenticación \item Uso de la misma sesión en múltiples pestañas o ventanas. \item No validar correctamente las solicitudes del usuario con un token CSRF \item Múltiples aplicaciones alojadas en un mismo dominio. Las cookies (que se usan para mantener la sesión del usuario) pueden ser compartidas entre subdominios. Esto se debe a que las políticas de mismo origen (Same-Origin Policy) que suelen proteger las solicitudes AJAX no siempre se aplican a las cookies. \end{itemize}
+\subsection*{Fuerzas desbalanceadas} \begin{itemize} \item Uso de cookies para autenticación \item Uso de la misma sesión en múltiples pestañas o ventanas. \item No validar correctamente las solicitudes del usuario con un token CSRF \item Múltiples aplicaciones alojadas en un mismo dominio. Las cookies (que se usan para mantener la sesión del usuario) pueden ser compartidas entre subdominios. Esto se debe a que las políticas de mismo origen (Same-Origin Policy) que suelen proteger las solicitudes AJAX no siempre se aplican a las cookies. \end{itemize}
 
-\subsection{Attack pattern} 
+\subsection*{Attack pattern} 
 \begin{itemize}
     \item CAPEC-111
     \item CAPEC-462
@@ -40,9 +40,9 @@ Requerimientos, Implementación
     \item CAPEC-62
 \end{itemize}
 
-\subsection{Problema} Un atacante puede enviar una solicitud maliciosa que se ejecutará bajo la credencial de un usuario autenticado, realizando acciones que el usuario no tenía intención de realizar, como cambiar su configuración, hacer transacciones o realizar acciones administrativas.
+\subsection*{Problema} Un atacante puede enviar una solicitud maliciosa que se ejecutará bajo la credencial de un usuario autenticado, realizando acciones que el usuario no tenía intención de realizar, como cambiar su configuración, hacer transacciones o realizar acciones administrativas.
 
-\subsection{Consecuencias} 
+\subsection*{Consecuencias} 
 
 \textbf{Confidencialidad:} Impacto Técnico: Obtener privilegios o asumir la identidad; Eludir el mecanismo de protección; Leer datos de la aplicación; Modificar datos de la aplicación; Denegación de servicio: Bloqueo, Cierre o Reinicio. 
 
@@ -54,14 +54,14 @@ Requerimientos, Implementación
 
 \textbf{Implementación:} \begin{itemize} \item Incluir un token anti-CSRF en cada formulario o solicitud sensible y validarlo en el lado del servidor. \item Asegurarse de que los formularios importantes y solicitudes sensibles se envíen solo por métodos HTTP POST y no GET. \item Utilizar técnicas como SameSite para las cookies, reduciendo la exposición a CSRF. \end{itemize}
 
-\subsection{Ejemplos de solución}
+\subsection*{Ejemplos de solución}
 
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/securing-code/cross-site-request-forgery/}{Patchstack}
     \item \href{https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html}{OWASP}
 \end{itemize}
 
-\subsection{Patrones relacionados}
+\subsection*{Patrones relacionados}
 
 \begin{itemize}
     \item Uso de tokens anti-CSRF en aplicaciones web. Este patrón de seguridad incluye generar un token único para cada sesión de usuario y adjuntarlo a solicitudes críticas que involucran cambios de estado.

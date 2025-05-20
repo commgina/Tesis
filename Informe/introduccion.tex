@@ -1,11 +1,10 @@
-\chapter{Introducción}
+\begin{center}
+\textbf{Resumen}
+\end{center}
 
-Las vulnerabilidades cuantifican la superficie de ataque digital de un sistema. En particular el stack de componentes expuestos a una red pública o dentro de una red privada compleja incluyen en su versión mínima: firmware, sistema operativo, frameworks varios y múltiples aplicaciones con sus propias arquitecturas. Todos ellos tienen vulnerabilidades conocidas y registradas en bases de datos como CVE\cite{CVE}. Dichas vulnerabilidades constituyen una información útil en la construcción de nuevas aplicaciones de software en la medida en que no se reiteren. Sentido común que no tiene su correlato en la realidad y las vulnerabilidades conocidas se reiteran en nuevos sistemas todo el tiempo.
-¿Cómo es posible que esto ocurra? Si bien los modelos de proceso de construcción de software tienen una madurez que aportan técnicas para minimizar el problema, por ejemplo la construcción de modelos de amenazas\cite{Microsoft_Threat_Modeling_Tool}; es frecuente que las herramientas utilizadas y urgencias de entregar funcionalidad conduzcan el desarrollo en la dirección de prácticas que repiten vulnerabilidades conocidas. Más la falta de formación formal en aspectos de ciberseguridad conducen a una escasa conciencia de las consecuencias de repetir fallas conocidas. Cuando se construye software utilizando Content Management Systems (CMS) los 10 principales frameworks representan más del 86\% del market share, con un 65,1\% de WordPress\cite{IONOS_CMS}. Cuando se utiliza este framework, existe una exposición a la historia de sus vulnerabilidades. En la Figura \ref{fig:mi_imagen} se muestra la evolución de la superficie de ataque de los principales CMS del mercado, con año en abscisas y vulnerabilidades descubiertas en ordenadas. Una curva llama la atención, la de WordPress. Sumado a su popularidad no es de extrañar que el escenario conduce a usuarios expuestos.
+\vspace{2em}
+Las vulnerabilidades definen la superficie de ataque de un sistema digital. Incluso en su configuración mínima, una aplicación expuesta a redes públicas o privadas incluye múltiples capas como firmware, sistema operativo, frameworks y aplicaciones con arquitecturas propias, todas susceptibles a vulnerabilidades conocidas y registradas en bases como \ACRshort{cve} \cite{CVE}. A pesar de contar con información pública sobre estas fallas, es común que se repitan en nuevos desarrollos.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{Imagenes/wpcms.png}
-    \caption{Cantidad de vulnerabilidades de los principales CMS.}
-    \label{fig:mi_imagen}
-\end{figure}
+Este trabajo parte de esa contradicción: ¿por qué las vulnerabilidades conocidas siguen ocurriendo? En contextos donde prima la entrega rápida de funcionalidad y hay poca formación en ciberseguridad, las buenas prácticas se relegan. En especial, cuando se utilizan \ACRshort{cms} como WordPress \cite{IONOS_CMS} —que concentra más del 65 \% del mercado—, el riesgo se amplifica debido a su historia de vulnerabilidades.
+
+El objetivo de esta tesis es identificar y clasificar los antipatrones de vulnerabilidades \cite{Nafees_2019} en WordPress, analizando cómo y por qué se repiten ciertos errores, con el fin de contribuir a su prevención desde etapas tempranas del desarrollo.

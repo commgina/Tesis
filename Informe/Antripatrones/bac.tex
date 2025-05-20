@@ -1,16 +1,16 @@
 
-\chapter{Apéndice C: Broken Access Control}
+\chapter{Broken Access Control}
 
 \section{Antripatrón}
 
-\subsection{Nombre}
+\subsection*{Nombre}
 Broken Access Control
-\subsection{También conocido como}
+\subsection*{También conocido como}
 Improper Access Control
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Arquitectura 
 Diseño
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-284 (Pillar). Relacionado con:
 \begin{itemize}
     \item CWE-862
@@ -37,7 +37,7 @@ A raíz de esto elegí como CWE principal el 284 porque es un pillar. Los \textb
 
 Para el desarrollo de este VAP, usaré un enfoque general para abarcar todos los tipos de BAC. Los ejemplos serán enfocados a Wordpress.
 
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 
 \begin{itemize}
     \item CVE-2023-35093
@@ -45,14 +45,14 @@ Para el desarrollo de este VAP, usaré un enfoque general para abarcar todos los
     \item CVE-2022-42460
 \end{itemize}
 
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 
 \begin{itemize}
     \item https://patchstack.com/academy/wordpress/vulnerabilities/broken-access-control/
     \item https://owasp.org/Top10/es/A01\_2021-Broken\_Access\_Control/
 \end{itemize}
 
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 
 \begin{itemize} 
     \item Control de acceso basado en rutas URL: La necesidad de ofrecer acceso a ciertas funcionalidades a través de URL específicas (por ejemplo, /admin, /usuario/{id}) puede llevar a que usuarios no autorizados modifiquen las URL para acceder a recursos restringidos si no se aplica una validación de acceso adecuada en el backend.
@@ -60,7 +60,7 @@ Para el desarrollo de este VAP, usaré un enfoque general para abarcar todos los
     \item Control de acceso en API externas: Cuando la aplicación requiere consumir o exponer servicios a través de API, si no se implementan controles de acceso en los endpoints o tokens de autenticación y autorización adecuados, los usuarios pueden acceder a datos o funcionalidades para los que no están autorizados.
 \end{itemize}
 
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 
 \begin{itemize}
     \item CAPEC-284
@@ -70,11 +70,11 @@ Para el desarrollo de este VAP, usaré un enfoque general para abarcar todos los
 \end{itemize}
 
 
-\subsection{Problema}
+\subsection*{Problema}
 
 El sistema permite que los usuarios accedan a funciones o datos que deberían estar restringidos, lo que puede resultar en la exposición de información sensible, modificación de datos, o la realización de acciones no autorizadas. A veces, los desarrolladores realizan la autenticación en el canal principal, pero abren un canal secundario que suponen que es privado. Por ejemplo, un mecanismo de inicio de sesión puede estar escuchando en un puerto de red, pero después de una autenticación exitosa, podría abrir un segundo puerto donde espera la conexión, pero omite la autenticación porque asume que solo la parte autenticada se conectará a ese puerto.
 
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 \begin{itemize} 
 \item \textbf{Confidencialidad}
 Impacto técnico: Leer datos de la aplicación; Leer archivos o directorios.
@@ -91,15 +91,15 @@ Un atacante podría obtener privilegios al modificar o leer datos críticos dire
 
 \section{Patrón}
 
-\subsection{Solución en el SDLC} \textbf{Arquitectura y Diseño} \begin{itemize} \item Implementar controles de acceso desde la etapa de diseño y realizar revisiones de seguridad periódicas. \item Establecer políticas claras de permisos para cada rol de usuario y documentarlas adecuadamente. \item Utilizar técnicas como el principio de menor privilegio para limitar el acceso a recursos sensibles. \end{itemize}
+\subsection*{Solución en el SDLC} \textbf{Arquitectura y Diseño} \begin{itemize} \item Implementar controles de acceso desde la etapa de diseño y realizar revisiones de seguridad periódicas. \item Establecer políticas claras de permisos para cada rol de usuario y documentarlas adecuadamente. \item Utilizar técnicas como el principio de menor privilegio para limitar el acceso a recursos sensibles. \end{itemize}
 
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/securing-code/broken-access-control/}{Patchstack}
 \end{itemize}
 
-\subsection{Related patterns}
+\subsection*{Related patterns}
 
 \begin{itemize} 
 \item \textbf{Proxy Pattern: }Este patrón es ideal para implementar un control de acceso centralizado y eficiente. Al interponer un proxy entre el cliente y los objetos sensibles o restringidos, se puede interceptar cada solicitud y validar los permisos antes de otorgar acceso.

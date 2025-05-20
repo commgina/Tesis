@@ -1,6 +1,9 @@
-\documentclass[11pt,twoside]{report}
+\documentclass[12pt,twoside]{report}
+\usepackage{lmodern} % Fuente similar a Computer Modern pero mejorada
+\linespread{1.1} % Aumenta un poco el interlineado
 
 % Paquetes necesarios
+\usepackage[acronym]{glossaries}  
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}     % Codificación de fuentes
 \usepackage[spanish]{babel}
@@ -10,8 +13,14 @@
 \usepackage{graphicx}        % Insertar imágenes
 \usepackage{adjustbox}
 \usepackage{float}
+\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage{csquotes}
+   % Glosario
+\makeglossaries
+\addbibresource{bibliografia.bib}
 
 \titlespacing*{\chapter}{0pt}{0.5cm}{0.5cm} % Ajustar espaciado en cm
+
 
 % Configuración de márgenes
 \geometry{
@@ -22,13 +31,57 @@
     bottom=2.5cm
 }
 
+\newglossaryentry{vulnerabilidad}{
+    name=vulnerabilidad,
+    description={una debilidad común y recurrente que ocurre debido a errores en el
+desarrollo, poco control de calidad en las etapas del SDLC o poca preocupación por cuestiones
+de seguridad. Esto sumado a la práctica de compartir información y conocimiento que tiene la
+comunidad de ciberseguridad, les permite a los hackers aprovecharse de estas vulnerabilidades.}
+}
+
+\newglossaryentry{patrón}{
+    name=patrón,
+    description={Es una solución general a un problema recurrente en un contexto determinado. En
+el desarrollo de software, un patrón es una solución probada y documentada a un problema}
+}
+
+\newglossaryentry{antipatrón}{
+    name=antipatrón,
+    description={Es una mala práctica de software. describe una solución común a un pro-
+blema frecuente, pero que genera consecuencias negativas. Deja al descubierto como algunas
+prácticas comunes en el desarrollo de software parecen apropiadas pero en realidad introducen
+más vulnerabilidades.}
+}
+
+\newacronym{cms}{CMS}{Content Management System}
+\newacronym{cve}{CVE}{Common Vulnerabilities and Exposures}
+\newacronym{cwe}{CWE}{Common Weakness Enumeration}
+\newacronym{vap}{VAP}{Vulnerability Antipattern}
+\newacronym{api}{API}{Application Programming Interface}
+\newacronym{sdcl}{SDLC}{Software Development Life Cycle}
+\newacronym{sql}{SQL}{Structured Query Language}
+
 % Documento
 \begin{document}
 
-% Inclusión del archivo requerimientos.tex
+\include{portada}
+
+\include{agradecimientos}
+
 \include{introduccion}
 
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\printglossary[title=Glosario]
+\printglossary[type=\acronymtype, title=Acrónimos]
+
 \include{propuesta}
+
+\include{mt}
 
 \include{vap}
 
@@ -83,6 +136,11 @@
 \include{Antripatrones/typejuggling}
 
 \include{Antripatrones/phpobjectinjection}
+
+
+
+
+\printbibliography
 
 \end{document}
 

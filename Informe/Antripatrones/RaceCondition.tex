@@ -1,23 +1,23 @@
 \chapter{Race Condition}
 \section{Antipatrón}
-\subsection{Nombre}
+\subsection*{Nombre}
 Race Condition
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 Concurrent Execution using Shared Resource with Improper Synchronization 
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Implementación.
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-362
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2022-45809
     \item CVE-2023-6109
 \end{itemize}
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 \begin{itemize}
     \item \href{https://cwe.mitre.org/data/definitions/362.html}{CWE}
 \end{itemize}
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 Los programadores suelen asumir que ciertas operaciones son muy rápidas y no pueden ser interrumpidas por otros hilos, pero esto no siempre es cierto.
    \textbf{ Ejemplo con x++}
     A nivel de código, x++ parece una operación única y atómica, pero en realidad, cuando se traduce a instrucciones de bajo nivel, se descompone en tres pasos:
@@ -29,14 +29,14 @@ Los programadores suelen asumir que ciertas operaciones son muy rápidas y no pu
     \end{enumerate}
     
     Si otro hilo interfiere entre estos pasos (por ejemplo, otro hilo también hace x++ al mismo tiempo), se puede generar un error de concurrencia, como una condición de carrera.
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 \begin{itemize}
     \item CAPEC-26
     \item CAPEC-29
 \end{itemize}
-\subsection{Problema}
+\subsection*{Problema}
 El producto contiene una secuencia de código concurrente que requiere acceso temporal y exclusivo a un recurso compartido, pero existe una ventana de tiempo en la que otro código que se ejecuta concurrentemente puede modificar dicho recurso compartido.
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 \begin{itemize}
     \item Disponibilidad: cuando una condición de carrera permite a múltiples flujos acceder a un recurso de manera simultanea puede generar estados inciertos del programa.
     \item Confidencialidad e integridad: Un atacante podría \textbf{leer o sobrescribir datos sensibles} si la condición de carrera involucra nombres de recursos predecibles y permisos débiles.
@@ -45,7 +45,7 @@ El producto contiene una secuencia de código concurrente que requiere acceso te
 
 \section{Patrón}
 
-\subsection{Solución en el SDLC}
+\subsection*{Solución en el SDLC}
 
 \textbf{Implementación} 
 
@@ -57,14 +57,14 @@ El producto contiene una secuencia de código concurrente que requiere acceso te
     \item Priorizar ciertos procesos u hilos por sobre otros al momento de acceder a los recursos compartidos.
 \end{itemize}
 
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 
 \begin{itemize}
     \item \href{https://cwe.mitre.org/data/definitions/362.html}{CWE}
     \item \href{https://plugins.trac.wordpress.org/changeset?sfp_email=&sfph_mail=&reponame=&new=2794107%40wp-polls%2Ftrunk&old=2729999%40wp-polls%2Ftrunk&sfp_email=&sfph_mail=}{Solución usando lock}
 \end{itemize}
 
-\subsection{Related patterns}
+\subsection*{Related patterns}
 
 \begin{itemize}
     \item Proxy Pattern: puede utilizarse para controlar el acceso a un recurso compartido.

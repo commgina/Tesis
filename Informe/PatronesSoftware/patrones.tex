@@ -1,5 +1,3 @@
-
-
 \chapter{Patrones de software aplicados a la seguridad}
 
 \section{Proxy Pattern}
@@ -60,7 +58,7 @@ El \textbf{patrón Adapter} (Adaptador) es un patrón de diseño estructural que
 \end{figure}
 
 
-\textbf{Analogía: }El gobierno es un excelente ejemplo del patrón Singleton. Un país solo puede tener un gobierno oficial. Independientemente de las identidades personales de las personas que forman los gobiernos, el título 'El Gobierno de X' es un punto de acceso global que identifica al grupo de personas a cargo. \\
+\textbf{Analogía: }El gobierno es un excelente ejemplo del patrón Singleton. Un país solo puede tener un gobierno oficial. Independientemente de las identidades personales de las personas que forman los gobiernos, el título 'El Gobierno de X' es un punto de acceso global que identifica al grupo de personas a cargo.
 
 El patrón \textbf{Singleton} puede ser útil cuando se necesita controlar el acceso y el comportamiento de un recurso compartido, como una conexión a la base de datos, un archivo de configuración o un registrador (logger). Uno de los beneficios del patrón Singleton es que puede mejorar la seguridad del sistema al garantizar la consistencia y prevenir el acceso no autorizado o la modificación del recurso compartido. 
 
@@ -80,7 +78,7 @@ El patrón \textbf{Observer} es un patrón de diseño de comportamiento que perm
     \label{fig:observer-pattern}
 \end{figure}
 
-\textbf{Monitoreo de seguridad en tiempo real:} Imagina que tienes diferentes componentes de seguridad en una red o aplicación, como un sistema de detección de intrusiones (IDS), un firewall, o un antivirus. Usando el patrón \textbf{Observer}, estos sistemas pueden observar eventos importantes que ocurren en el sistema, como accesos no autorizados, intentos de inyección de SQL o actividad sospechosa. Cuando el sistema principal detecta un evento de seguridad, notifica a todos los observadores (componentes de seguridad) para que tomen las acciones correspondientes (como bloquear una IP, generar una alerta o iniciar un análisis). 
+\textbf{Monitoreo de seguridad en tiempo real:} Imagina que tienes diferentes componentes de seguridad en una red o aplicación, como un sistema de detección de intrusiones (IDS), un firewall, o un antivirus. Usando el patrón \textbf{Observer}, estos sistemas pueden observar eventos importantes que ocurren en el sistema, como accesos no autorizados, intentos de inyección de \ACRshort{sql} o actividad sospechosa. Cuando el sistema principal detecta un evento de seguridad, notifica a todos los observadores (componentes de seguridad) para que tomen las acciones correspondientes (como bloquear una IP, generar una alerta o iniciar un análisis). 
 
 \textbf{Notificación de eventos de seguridad:} En una aplicación o servidor web, podrías tener múltiples observadores que estén pendientes de eventos de seguridad, como la creación de nuevas cuentas de usuario o el acceso a archivos sensibles. Cada vez que ocurre un evento, los observadores pueden recibir una notificación y actuar en consecuencia (alertar a los administradores, registrar la actividad, activar un sistema de defensa, etc.).
 

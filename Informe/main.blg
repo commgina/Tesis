@@ -1,0 +1,14 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'main.blg'
+[137] biber-MSWIN64:340> INFO - === 
+[186] Biber.pm:419> INFO - Reading 'main.bcf'
+[429] Biber.pm:979> INFO - Found 9 citekeys in bib section 0
+[452] Biber.pm:4419> INFO - Processing section 0
+[467] Biber.pm:4610> INFO - Looking for bibtex file 'bibliografia.bib' for section 0
+[531] bibtex.pm:1713> INFO - LaTeX decoding ...
+[542] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliografia.bib'
+[587] Utils.pm:410> ERROR - BibTeX subsystem: C:\Users\Gina\AppData\Local\Temp\biber_tmp_rumi\499af1e6906591d6961f19d66c065a09_12892.utf8, line 80, syntax error: found ",", expected one of: number, name (entry type, key, field, or macro name), end of entry ("}" or ")") or quoted string ({...} or "...")
+[587] Biber.pm:131> WARN - Duplicate entry key: 'Patchstack' in file 'bibliografia.bib', skipping ...
+[588] Biber.pm:131> WARN - Invalid or undefined BibTeX entry key in file 'C:\Users\Gina\AppData\Local\Temp\biber_tmp_rumi\499af1e6906591d6961f19d66c065a09_12892.utf8', skipping ...
+[588] Biber.pm:133> INFO - WARNINGS: 2
+[588] Biber.pm:136> INFO - ERRORS: 1

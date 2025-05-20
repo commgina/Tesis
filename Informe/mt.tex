@@ -1,0 +1,34 @@
+\chapter{Marco Teórico}
+
+\section{Introducción a la Seguridad en Aplicaciones Web desarrolladas con CMS}
+
+\subsection{El rol de los CMS en la infraestructura digital}
+
+Las aplicaciones web se han convertido en una parte fundamental de la infraestructura digital de las organizaciones. En particular, aquellas construidas sobre sistemas de gestión de contenidos (CMS, por sus siglas en inglés) como WordPress, Joomla o Drupal, presentan una serie de ventajas en términos de flexibilidad, escalabilidad y facilidad de uso, pero también heredan riesgos asociados al uso de componentes de terceros, configuraciones inseguras o falta de actualizaciones.
+
+\subsection{Riesgos asociados a los CMS}
+
+Los CMS expuestos a internet, incluso cuando no almacenan información sensible, representan una superficie de ataque atractiva para actores maliciosos. Esto se debe, en parte, a la popularidad de estas plataformas y a la frecuencia con la que se encuentran configuraciones inseguras, componentes desactualizados o extensiones vulnerables. Una vez comprometido un CMS, los atacantes pueden utilizar el servidor web para múltiples fines: acceso a zonas privilegiadas, instalación de malware (como web shells), inyección de contenido malicioso, o como parte de ataques de mayor escala, infraestructura de comando y control.
+
+\subsection{Causas comunes de intrusiones en CMS}
+
+Muchas de estas intrusiones no son dirigidas específicamente, sino que se producen de forma oportunista mediante el uso de herramientas automatizadas que escanean internet en busca de CMS vulnerables. Los atacantes se aprovechan de errores comunes como la falta de parches, configuraciones por defecto, contraseñas débiles o extensiones inseguras.
+
+Una de las causas más comunes de intrusiones en aplicaciones web es el uso de versiones desactualizadas del CMS o del servidor web. Esto puede facilitar la explotación de vulnerabilidades conocidas, volviendo trivial el compromiso del sistema. Para minimizar este riesgo, es fundamental establecer procesos formales para la prueba y aplicación de parches, tanto del CMS como del sistema operativo y las aplicaciones de terceros utilizadas, incluyendo temas, frameworks y librerías asociadas.
+Un CMS no funciona de forma aislada: depende de una pila de software (web stack) que incluye el servidor, el lenguaje de programación y la base de datos. Además, muchas organizaciones integran plugins, código personalizado o aplicaciones externas. Todos estos componentes deben mantenerse actualizados, ya que una vulnerabilidad en cualquiera de ellos puede comprometer la seguridad del sistema completo.
+Si bien existen numerosas recomendaciones técnicas para proteger un CMS —como el uso de firewalls de aplicación, escaneos con herramientas automatizadas, o prácticas básicas como gestionar contraseñas y restringir accesos—, estas medidas suelen enfocarse en la infraestructura, dejando de lado al verdadero eslabón débil: el desarrollador.
+
+\subsection{El papel del desarrollador en la seguridad de aplicaciones web}
+
+En el contexto de WordPress, es común que los desarrolladores integren plugins o snippets que simplifican tareas o agregan funcionalidad, sin evaluar su impacto en la seguridad. Muchas de las vulnerabilidades reportadas surgen no por desconocimiento técnico general, sino por malas decisiones de diseño o implementación, que podrían evitarse con formación específica en patrones inseguros y prácticas recomendadas.
+Acá es donde cobra sentido el enfoque de mi tesis: acercar al desarrollador información útil sobre los antipatrones de seguridad más frecuentes en WordPress. No basta con identificar y reportar vulnerabilidades; también es necesario entender por qué siguen apareciendo. Educar al desarrollador sobre estas malas prácticas, desde una perspectiva accesible y alineada con su flujo de trabajo, puede ser una de las herramientas más efectivas para revertir esta tendencia.
+
+
+\section{Wordpress como plataforma}
+
+\subsection{Breve historia y evolución}
+
+WordPress\cite{Wordpress} fue lanzado en 2003 por Matt Mullenweg y Mike Little como una bifurcación del proyecto b2/cafelog. Su objetivo inicial era ofrecer una plataforma de blogging simple, pero con el tiempo se transformó en un sistema de gestión de contenidos (CMS) completo. Gracias a su filosofía open source, su comunidad activa y su enfoque modular, WordPress evolucionó para ser utilizado en blogs personales, sitios corporativos, tiendas en línea y hasta portales institucionales. A lo largo de los años ha incorporado funcionalidades como la gestión de páginas estáticas, soporte para plugins y temas, y capacidades multisitio, consolidándose como una herramienta versátil para la creación de sitios web de diversa índole.
+
+\subsection{Estadísticas de uso}
+

@@ -1,0 +1,11 @@
+# Construir la imagen
+docker build -t api_vaps .
+
+# Levantar el contenedor
+docker run -d -p 8000:8000 --name api_vaps_container api_vaps
+
+# Apagar el contenedor
+docker stop api_vaps_container
+
+# (Opcional) Eliminar el contenedor
+docker rm api_vaps_container

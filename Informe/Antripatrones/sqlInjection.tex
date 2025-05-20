@@ -1,41 +1,41 @@
-\chapter{Apéndice A: SQL Injection}
+\chapter{SQL Injection}
 
 \section{Antipatrón}
 
-\subsection{Nombre}
+\subsection*{Nombre}
 SQL Injection
 
-\subsection{También conocido como}
+\subsection*{También conocido como}
 Improper Neutralization of Special Elements used in an SQL Command
 
-\subsection{Frecuentemente expuesto en el SDLC} 
+\subsection*{Frecuentemente expuesto en el SDLC} 
 Diseño
 
-\subsection{Mapeo con CWE} 
+\subsection*{Mapeo con CWE} 
 CWE-89
 
-\subsection{Ejemplos de CVE} 
+\subsection*{Ejemplos de CVE} 
 \begin{itemize}
     \item CVE-2024-7827
     \item CVE-2024-7857
     \item CVE-2011-3130
 \end{itemize}
 
-\subsection{Ejemplo de Anti-patrón}
+\subsection*{Ejemplo de Anti-patrón}
 \begin{itemize}
     \item https://patchstack.com/academy/wordpress/vulnerabilities/sql-injection/
     \item https://cwe.mitre.org/data/definitions/89.html
     
 \end{itemize}
 
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 
 \begin{enumerate}
     \item \textbf{Requerimiento de consultas SQL dinámicas: }El sistema permite a los usuarios realizar consultas dinámicas para buscar o filtrar información en la base de datos. Esta flexibilidad responde a la necesidad de ofrecer funcionalidades avanzadas de búsqueda y acceso a los datos. Sin embargo, cuando este requerimiento se implementa sin el uso de parámetros preparados o procedimientos almacenados, y se permite que los datos de entrada del usuario se inserten directamente en la consulta SQL, se expone una vulnerabilidad de inyección SQL. Esto permite que un atacante modifique la semántica de las consultas SQL inyectando código malicioso.
-    \item \textbf{Requerimiento de autenticación y autorización:} El sistema permite que los usuarios se autentiquen con credenciales personalizadas, como nombres de usuario y contraseñas, y accedan a sus propios recursos. Este requerimiento es común en sistemas con múltiples roles y privilegios. Sin embargo, si los datos de autenticación se insertan directamente en consultas SQL sin un filtro de validación o escape de caracteres especiales, un atacante podría inyectar comandos SQL maliciosos durante el proceso de inicio de sesión. \\
+    \item \textbf{Requerimiento de autenticación y autorización:} El sistema permite que los usuarios se autentiquen con credenciales personalizadas, como nombres de usuario y contraseñas, y accedan a sus propios recursos. Este requerimiento es común en sistemas con múltiples roles y privilegios. Sin embargo, si los datos de autenticación se insertan directamente en consultas SQL sin un filtro de validación o escape de caracteres especiales, un atacante podría inyectar comandos SQL maliciosos durante el proceso de inicio de sesión.
 \end{enumerate}
 
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 
 \begin{itemize}
     \item CAPEC-7
@@ -45,12 +45,12 @@ CWE-89
     \item CAPEC-110 
 \end{itemize}
 
-\subsection{Problema}
+\subsection*{Problema}
 
 El sistema no escapa correctamente los caracteres especiales utilizados en la construcción de una consulta SQL, lo que puede alterar el significado de la consulta enviada a la base de datos. Los atacantes pueden inyectar fácilmente su propio código SQL en la consulta ejecutada, lo que permite una amplia variedad de acciones. Por ejemplo, cuando se utilizan consultas SQL en contextos de seguridad, como la autenticación, los atacantes pueden modificar la lógica de esas consultas para obtener acceso no autorizado al ajustar las reglas de autenticación, o eliminando o actualizando registros de la base de datos. 
 Los ataques de inyección SQL pueden dirigirse a consultas SQL construidas directamente por el código de la aplicación, o a consultas realizadas por procedimientos almacenados en el cliente o en el servidor. Varios ataques bien conocidos implican comprometer un sistema mediante la inyección de consultas SQL que contienen código malicioso o contenido de la base de datos. 
 
-\subsection{Consecuancias}
+\subsection*{Consecuancias}
 
 \begin{itemize}
     \item \textbf{Confidencialidad:} Los adversarios podrían ejecutar comandos del sistema, generalmente modificando la declaración SQL para redirigir la salida a un archivo que luego puede ser ejecutado.
@@ -59,9 +59,9 @@ Los ataques de inyección SQL pueden dirigirse a consultas SQL construidas direc
     \item \textbf{Integridad:} Al igual que es posible leer información sensible, también es posible modificar o incluso eliminar esta información mediante un ataque de inyección SQL.
 \end{itemize}
 
-\section{\textbf{Patrón}}
+\section{Patrón}
 
-\subsection{Solucion en el SDLC}
+\subsection*{Solucion en el SDLC}
 
 \textbf{Diseño}
 
@@ -80,14 +80,14 @@ Los ataques de inyección SQL pueden dirigirse a consultas SQL construidas direc
 \end{itemize}
 
 
-\subsection{Ejemplo de Solución}
+\subsection*{Ejemplo de Solución}
 
 \begin{itemize}
     \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/sql-injection/}{Patchstack - SQL Injection}
     \item \href{https://cheatsheetseries.owasp.org/cheatsheets/SQL\_Injection\_Prevention\_Cheat\_Sheet.html}{OWASP SQL Injection}
 \end{itemize}
 
-\subsection{Patrones relacionados}
+\subsection*{Patrones relacionados}
 
 \textbf{Interceptor (POSA)} 
 

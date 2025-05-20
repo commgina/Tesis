@@ -1,30 +1,30 @@
-\chapter{Apéndice B: Cross Site Scripting CSS}
+\chapter{Cross Site Scripting CSS}
 
 \section{Antipatrón}
 
-\subsection{Nombre}
+\subsection*{Nombre}
 Cross-Site Scripting
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Diseño
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-79. 
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2024-2194
     \item CVE-2024-5645
     \item CVE-2021-24934
 \end{itemize}
 
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 
 \begin{itemize}
     \item https://patchstack.com/academy/wordpress/vulnerabilities/cross-site-scripting/
     \item https://cwe.mitre.org/data/definitions/79.html
 \end{itemize}
 
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 
 \begin{itemize}
     \item La ausencia de un requerimiento que para implementar un mecanismo de escape de salida que asegure que todos los datos generados a partir de entradas del usuario sean escapados antes de ser presentados en la interfaz de usuario.
@@ -32,7 +32,7 @@ CWE-79.
     \item La falta de un sistema de filtrado de contenido que procese el HTML proporcionado por el usuario, eliminando o escapando etiquetas y atributos potencialmente peligrosos.
 \end{itemize}
 
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 \begin{itemize}
     \item CAPEC-209
     \item CAPEC-588
@@ -42,11 +42,11 @@ CWE-79.
     \item CAPEC-85
 \end{itemize}
 
-\subsection{Problema}
+\subsection*{Problema}
 
 El sistema permite que los usuarios inyecten código malicioso en una página web que será ejecutado por el navegador de otros usuarios. Esto permite a los atacantes robar información sensible, como cookies, o ejecutar acciones en nombre de otros usuarios sin su conocimiento.
 
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 
 \begin{itemize}
     \item Session Hijacking: Un atacante puede robar la sesión de un usuario.
@@ -56,7 +56,7 @@ El sistema permite que los usuarios inyecten código malicioso en una página we
 
 \section{Patrón}
 
-\subsection{Solución en el SDLC}
+\subsection*{Solución en el SDLC}
 \textbf{Diseño}
 
 \begin{itemize}
@@ -73,7 +73,7 @@ El sistema permite que los usuarios inyecten código malicioso en una página we
     \item Evitar la construcción dinámica de scripts, y en su lugar utilizar funciones que gestionen el contexto seguro.
 \end{itemize}
 
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 
 \begin{itemize}
     \item \href{https://www.php.net/manual/en/function.htmlspecialchars.php}{PHP Manual}
@@ -81,7 +81,7 @@ El sistema permite que los usuarios inyecten código malicioso en una página we
     \item \href{https://patchstack.com/academy/wordpress/vulnerabilities/cross-site-scripting/}{Patchstack}
 \end{itemize}
 
-\subsection{Patrones relacionados}
+\subsection*{Patrones relacionados}
 
 \begin{itemize}
 

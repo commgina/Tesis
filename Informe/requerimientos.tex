@@ -14,31 +14,21 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
 
 \subsubsection{RF1: Consulta de CVE}
 
-\textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /cve/{cve-id} para obtener detalles sobre un CVE específico. La respuesta incluirá la información de la vulnerabilidad y del antipatrón de vulnerabilidad si está disponible.
+\textbf{Descripción:} el servicio permitirá al usuario realizar una solicitud GET al endpoint /cwe/{cwe-id} para obtener detalles sobre un antipatrón específico. La respuesta incluirá la información del antipatrón de vulnerabilidad si está disponible.
 
-\textbf{Endpoint:} GET /cve/{cve-id}
+\textbf{Endpoint:} GET /cwe/{cwe-id}
 
 \textbf{Parámetros de entrada:} 
 \begin{itemize}
-    \item cve-id (obligatorio): ID del CVE, por ejemplo, CVE-2023-1234.
+    \item cwe-id (obligatorio): ID del CWE, por ejemplo, 22.
 \end{itemize}
-
-\textbf{Respuestas:}
-
-\begin{itemize}
-    \item 200 OK: Devuelve el CWE y el antipatrón asociado al CVE.
-    \item 400 Bad Request: Si el formato del CVE ingresado no es válido.
-    \item 404 Not Found: El CVE no existe.
-\end{itemize}
-
 
 \textbf{Flujo normal:}
 
 \begin{enumerate}
-    \item El usuario envía una solicitud GET al endpoint con un CVE.
-    \item El sistema consulta la API de WP Vulnerability Database.
-    \item Se obtiene el CWE y, basado en eso, el antipatrón de la base de datos interna.
-    \item Se devuelve al usuario la información del CVE, CWE y el antipatrón.
+    \item El usuario envía una solicitud GET al endpoint con un CWE.
+    \item El sistema consulta la base de datos para buscar un documento cuyo CWE sea igual al solicitado.
+    \item Se devuelve al usuario la información del antipatrón.
 \end{enumerate}
 
 \subsubsection{RF2: Consulta de versión del Kernel de Wordpress}
@@ -53,12 +43,6 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item wordpress-version (obligatorio): versión de wordpress por la que quiere consultar. Ej.: 6.6.2
 \end{itemize}
 
-\textbf{Respuestas:}
-
-\begin{itemize}
-    \item 200 OK: Devuelve las vulnerabilidades de la versión con sus respectivos CWE y antipatrones.
-    \item 400 Bad Request: Si el formato de la versión ingresada no respeta el el versionado semántico.
-\end{itemize}
 
 \textbf{Flujo normal:}
 
@@ -80,13 +64,6 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
 \begin{itemize}
     \item plugin-name (obligatorio): nombre del plugin por el que se quiere consultar.
     \item plugin-version (opcional): versión del plugin por la que se quiere consultar.
-\end{itemize}
-
-\textbf{Respuestas:}
-
-\begin{itemize}
-    \item 200 OK: Devuelve las vulnerabilidades de la versión con sus respectivos CWE y antipatrones.
-    \item 400 Bad Request: Si el formato de la versión ingresada no respeta el versionado semántico.
 \end{itemize}
 
 \textbf{Flujo normal 1:}
@@ -120,13 +97,6 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item theme-version (opcional): versión del tema por la que se quiere consultar.
 \end{itemize}
 
-\textbf{Respuestas:}
-
-\begin{itemize}
-    \item 200 OK: Devuelve las vulnerabilidades de la versión con sus respectivos CWE y antipatrones.
-    \item 400 Bad Request: Si el formato de la versión ingresada no respeta el versionado semántico.
-\end{itemize}
-
 \textbf{Flujo normal 1:}
 
 \begin{enumerate}
@@ -145,7 +115,11 @@ El software está diseñado para desarrolladores de WordPress que desean obtener
     \item Se devuelve al usuario la información del CVE, CWE y el antipatrón por cada vulnerabilidad.
 \end{enumerate}
 
-\subsubsection{RF5: Base de Datos de Antipatrones}
+\subsubsection{RF5: Manejo de errores}
+
+El sistema deberá delegar en el framework FastAPI el manejo automático de errores estructurales, como rutas inexistentes (404) o parámetros mal formateados o ausentes (422). Esto garantizará respuestas HTTP estándar sin necesidad de implementar validaciones adicionales manuales, salvo en aquellos casos que requieran lógica de negocio específica.
+
+\subsubsection{RF6: Base de Datos de Antipatrones}
 
 El sistema deberá contar con una base de datos que almacene los CWE y sus correspondientes VAP.
 
@@ -220,6 +194,31 @@ Dado que la API de vulnerabilidades retorna los rangos de versiones afectados me
 \end{itemize}
 
 Esto me permitió filtrar con precisión cuáles vulnerabilidades afectaban realmente a una versión específica de un plugin, un tema o el core de WordPress.
+
+\subsubsection{Desarrollo del módulo db.py}
+El archivo db.py encapsula la lógica de acceso a la base de datos MongoDB utilizada para almacenar los antipatrones asociados a cada CWE.
+Sus principales responsabilidades son:
+\begin{itemize}
+\item Establecer una conexión con la base de datos MongoDB utilizando la librería \texttt{pymongo}.
+\item Consultar la colección de antipatrones para buscar un documento por identificador de CWE.
+\item Devolver el documento correspondiente en formato de diccionario de Python.
+\end{itemize}
+
+El diseño de este módulo facilita la reutilización de la lógica de acceso a los datos desde diferentes puntos del proyecto, manteniendo el código desacoplado y ordenado.
+
+\subsubsection{Desarrollo del módulo main.py}
+El archivo main.py actúa como punto de entrada principal de la API, implementada con FastAPI.
+Sus principales responsabilidades son:
+\begin{itemize}
+\item Definir las rutas de la API para consultar vulnerabilidades y antipatrones.
+\item Integrarse con los módulos \texttt{db.py} y \texttt{wpquery.py} para obtener datos desde la base de datos y la API externa de vulnerabilidades.
+\item Estructurar las respuestas, agrupando los CVE detectados por CWE y asociando el antipatrón correspondiente si está disponible.
+\item Proveer endpoints específicos para consultar por el core de WordPress, plugins y temas, permitiendo además filtrar por versión.
+\end{itemize}
+
+Gracias a este módulo, es posible acceder a los resultados del análisis de vulnerabilidades de forma estructurada y coherente, facilitando su consumo por otras aplicaciones o herramientas.
+
+
 
 \subsubsection{Tratamiento de CWE y Mapeo hacia Antipatrones}
 

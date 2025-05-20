@@ -1,43 +1,43 @@
 \chapter{Insecure Direct Object Reference IDOR}
 \section{Antipatrón}
-\subsection{Nombre}
+\subsection*{Nombre}
 Insecure Direct Object Reference IDOR
-\subsection{Tambien conocido como}
+\subsection*{Tambien conocido como}
 \begin{itemize}
     \item Authorization Bypass Through User-Controlled Key
     \item Broken Object Level Authorization / BOLA
     \item Horizontal Authorization
 \end{itemize}
-\subsection{Frecuentemente expuesto en la etapa del SDLC}
+\subsection*{Frecuentemente expuesto en la etapa del SDLC}
 Arquitectura
-\subsection{Mapeo con CWE}
+\subsection*{Mapeo con CWE}
 CWE-639
-\subsection{Ejemplos de CVE}
+\subsection*{Ejemplos de CVE}
 \begin{itemize}
     \item CVE-2024-10174
     \item CVE-2019-20209
 \end{itemize}
-\subsection{Ejemplo de antipatrón}
+\subsection*{Ejemplo de antipatrón}
 \begin{itemize}
     \item \href{https://cwe.mitre.org/data/definitions/639.html}{CWE}
     \item \href{https://portswigger.net/web-security/access-control/idor}{Portswigger}
 \end{itemize}
-\subsection{Fuerzas desbalanceadas}
+\subsection*{Fuerzas desbalanceadas}
 \begin{itemize}
     \item El sistema implementa mecanismos de autorización pero no previene que un usuario acceda a información de otro permitiendo la modificación de identificadores claves de los datos. 
     \item Los identificadores internos del sistema (como IDs de base de datos, números de factura, etc.) son enviados o expuestos directamente en las URLs o como parámetros en los formularios. Los usuarios pueden modificar estos identificadores en las URLs o solicitudes para acceder a recursos de otros usuarios o recursos a los que no deberían tener acceso.
     \item Se utilizan identificadores para acceder a recursos pero estos son predecibles o secuenciales (por ejemplo, orderID=1, orderID=2, orderID=3, etc.). 
 \end{itemize}
-\subsection{Attack pattern}
+\subsection*{Attack pattern}
 \begin{itemize}
     \item CAPEC-1
     \item CAPEC-77
 \end{itemize}
 
-\subsection{Problema}
+\subsection*{Problema}
 Insecure Direct Object Reference (IDOR) es una vulnerabilidad que surge cuando los atacantes pueden acceder o modificar objetos manipulando identificadores utilizados en las URL o parámetros de una aplicación web. Esto ocurre debido a la ausencia de verificaciones de control de acceso, que no logran comprobar si un usuario debería tener permitido acceder a datos específicos.
 
-\subsection{Consecuencias}
+\subsection*{Consecuencias}
 Control de acceso
 \begin{itemize}
     \item  La escalación vertical de privilegios es posible si el dato o parámetro controlado por el usuario es, en realidad, un indicador que señala el estado de administrador, lo que permite al atacante obtener acceso con privilegios administrativos.
@@ -46,20 +46,20 @@ Control de acceso
 
 
 \section{Patrón}
-\subsection{Solución en el SDLC}
+\subsection*{Solución en el SDLC}
 Arquitectura
 \begin{itemize}
     \item Para cada acceso a datos, asegurarse de que el usuario tenga privilegios suficientes para acceder al registro solicitado.
     \item Utilizar identificadores de objetos complejos
     \item Utilizar frameworks de control de acceso
 \end{itemize}
-\subsection{Ejemplo de solución}
+\subsection*{Ejemplo de solución}
 \begin{itemize}
     \item \href{https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html}{OWAP Cheatseet}
     \item \href{https://blog.hackmetrix.com/insecure-direct-object-reference/}{Hackmetrix}
 \end{itemize}
 
-\subsection{Related patterns}
+\subsection*{Related patterns}
 \begin{itemize}
     \item Proxy: Utiliza un objeto proxy como intermediario entre el usuario y el recurso solicitado. Este patrón puede verificar permisos y validar la autenticidad de la solicitud antes de delegar la operación.
     \item Facade Pattern: un facade en este contexto permitiría centralizar el acceso a los datos. Todas las solicitudes pasarían por la Facade, que verificará los permisos antes de permitir el acceso al recurso solicitado.

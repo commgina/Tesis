@@ -1,8 +1,19 @@
 import requests
 from packaging import version
 
-def buscar_vulnerabilidades_plugin(plugin_slug, version_objetivo):
-    url = f"https://www.wpvulnerability.net/plugin/{plugin_slug}"
+
+# Se usa =None en la definición de una función para hacer que ese parámetro sea opcional. 
+def buscar_vulnerabilidades(plugin_slug=None, theme_slug=None, core_version=None, version_objetivo=None):
+    # --- Determinar el tipo de recurso ---
+    if plugin_slug:
+        url = f"https://www.wpvulnerability.net/plugin/{plugin_slug}"
+    elif theme_slug:
+        url = f"https://www.wpvulnerability.net/theme/{theme_slug}"
+    elif core_version:
+        url = f"https://www.wpvulnerability.net/core/{core_version}"
+    else:
+        raise ValueError("Debes proporcionar plugin_slug, theme_slug o core_version.")
+    
     respuesta = requests.get(url)
 
     if respuesta.status_code != 200:
@@ -13,6 +24,9 @@ def buscar_vulnerabilidades_plugin(plugin_slug, version_objetivo):
     vulnerabilidades = data.get("data", {}).get("vulnerability", [])
 
     agrupadas_por_cwe = {}  # clave: cwe principal, valor: lista de tuplas (cve, cwe original)
+    cwes_no_mapeados = []  # Lista de tuplas (cve, cwe sin mapear)
+
+# 1. De todas las vulnerabilidades se extrae el CWE y el CVE
 
     for v in vulnerabilidades:
         min_version = v.get("operator", {}).get("min_version")
@@ -20,44 +34,46 @@ def buscar_vulnerabilidades_plugin(plugin_slug, version_objetivo):
         max_version = v.get("operator", {}).get("max_version")
         max_operator = v.get("operator", {}).get("max_operator")
 
-        if version_en_rango(version_objetivo, min_version, min_operator, max_version, max_operator):
-            fuentes = v.get("source", [])
-            cves = [s["id"] for s in fuentes if s.get("id", "").startswith("CVE-")]
-            impact = v.get("impact")
+            # --- Lógica según tipo de búsqueda ---
+        if version_objetivo:  # Se está buscando por versión de plugin o tema
+            if not version_en_rango(version_objetivo, min_version, min_operator, max_version, max_operator):
+                continue
+        elif core_version:  # Se está buscando por versión del core
+            if not version_en_rango(core_version, min_version, min_operator, max_version, max_operator):
+                continue
 
-            # Si impact es un diccionario, seguimos normalmente
-            cwes = extraer_cwes(impact)
-                
-            for cwe_info in cwes:
-                cwe_code = cwe_info.get("cwe")
-                if not cwe_code:
-                    continue
 
-                # Intenta mapear el CWE a uno de los principales definidos en tu diccionario. Si no lo encuentra (ni como principal ni como hijo), lo saltea.
-                cwe_principal = mapear_cwe_a_principal(cwe_code)
-                if not cwe_principal:
-                    continue
+        fuentes = v.get("source", [])
+        cves = [s["id"] for s in fuentes if s.get("id", "").startswith("CVE-")]
+        impact = v.get("impact")
 
-                # Si el CWE principal no está en el diccionario, lo inicializamos
-                if cwe_principal not in agrupadas_por_cwe:
-                    agrupadas_por_cwe[cwe_principal] = []
+        # Si impact es un diccionario, seguimos normalmente
+        cwes = extraer_cwes(impact)
 
-                # Para cada CVE asociado a esa vulnerabilidad, lo agrega a la lista del CWE principal, junto con su CWE real (por si era un hijo).
+# 2. Se busca si el cwe tiene un antipatrón o es hijo de un cwe con antipatrón
+
+        for cwe_info in cwes:
+            cwe_code = cwe_info.get("cwe")
+            if not cwe_code:
+                continue
+
+            # Intenta mapear el CWE a uno de los principales definidos en tu diccionario. Si no lo encuentra (ni como principal ni como hijo), lo saltea.
+            cwe_principal = mapear_cwe_a_principal(cwe_code)
+            if not cwe_principal:
                 for cve in cves:
-                    agrupadas_por_cwe[cwe_principal].append((cve, cwe_code))
-                
-    # Mostrar resultados agrupados
-    for cwe_principal, lista_cves in agrupadas_por_cwe.items():
-        print(f"\nVulnerabilidades con CWE-{cwe_principal} o childOf-CWE-{cwe_principal}")
-        for cve, cwe_origen in lista_cves:
-            if cwe_origen == f"CWE-{cwe_principal}":
-                print(f"  {cve}")
-            else:
-                print(f"  {cve} ({cwe_origen})")
+                    cwes_no_mapeados.append((cve, cwe_code))
+                continue
 
-    
+            # Si el CWE principal no está en el diccionario, lo inicializamos
+            if cwe_principal not in agrupadas_por_cwe:
+                agrupadas_por_cwe[cwe_principal] = []
 
+            # Para cada CVE asociado a esa vulnerabilidad, lo agrega a la lista del CWE principal, junto con su CWE real (por si era un hijo).
+            for cve in cves:
+                agrupadas_por_cwe[cwe_principal].append((cve, cwe_code))
 
+    return agrupadas_por_cwe, cwes_no_mapeados
+   
 def version_en_rango(version_objetivo, min_version, min_op, max_version, max_op):
     # Convertimos la versión que estamos evaluando
     vo = version.parse(version_objetivo)
@@ -111,7 +127,6 @@ def mapear_cwe_a_principal(cwe):
 
     return None  # No encontrado
 
-
 # --- Mapeo de CWE principales e hijos ---
 cwe_parents = {
     "79": ["80", "81", "83", "84", "85", "86", "87"],
@@ -132,5 +147,6 @@ cwe_parents = {
     "502": []
 }
 
+# slug = internal name used by WordPress to do plugin updates and to determine which plugins are currently active
 
-buscar_vulnerabilidades_plugin("elementor", "3.0.0")
+buscar_vulnerabilidades(plugin_slug="woocommerce")
